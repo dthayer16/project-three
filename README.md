@@ -9,7 +9,7 @@ At the landing page the User will be prompted to enter a destination. The user's
 
 # Flowchart
 
-![FlowChart Image 1](./public/images/project3diagrampg1.png)
-![FlowChart Image 2](./public/images/project3diagrampg2.png)
+![FlowChart Image 1](./images/project3diagrampg1.png)
+![FlowChart Image 2](./images/project3diagrampg2.png)
 
 # Rough Breakdown of Tasks
