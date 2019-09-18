@@ -8,8 +8,8 @@ Our Web Application will take in the user's desired destination. Then provide th
 
 # Flowchart
 
-![FlowChart Image 1](../images/project3diagrampg1.png)
-![FlowChart Image 2](../images/project3diagrampg2.png)
+![FlowChart Image 1](./images/project3diagrampg1.png)
+![FlowChart Image 2](./images/project3diagrampg2.png)
 
 # Rough Breakdown of Tasks
 Broad front-end functionality (query APIs and recieve response)

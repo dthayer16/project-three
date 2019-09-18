@@ -20,9 +20,19 @@ class StuffToDo extends Component {
       })
       .catch(err => console.log(err));
   };
+
+  getYelp = () => {
+    Axios.get("/v1/yelp")
+      .then(result => {
+        this.setState({ yelp: result.data.businesses });
+      })
+      .catch(err => console.log(err));
+  };
+
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
     this.getEvents();
+    this.getYelp();
   }
 
   handleInputChange = event => {
@@ -35,7 +45,7 @@ class StuffToDo extends Component {
   handleFormSubmit = () => {
     this.getEvents("/v1/events", { location: this.state.search })
       .then(result => {
-        this.setState({ eventful: result.data.events.event });
+        this.setState({ eventful: result.data.events.event, yelp: result.data.businesses });
       })
       .catch(err => console.log(err));
   };
