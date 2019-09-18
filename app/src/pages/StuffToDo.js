@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import API from "../utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
+import Axios from "axios";
 
 class StuffToDo extends Component {
   state = {
@@ -13,28 +13,33 @@ class StuffToDo extends Component {
     error: ""
   };
 
+  getEvents = () => {
+    Axios.get("/v1/events")
+      .then(result => {
+        this.setState({ eventful: result.data.events.event });
+      })
+      .catch(err => console.log(err));
+  };
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    API.getEvents()
-      .then(res => this.setState({ eventful: res.data.events }))
-      .catch(err => console.log(err));
+    this.getEvents();
   }
 
   handleInputChange = event => {
-    this.setState({ search: event.target.value });
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleFormSubmit = () => {
+    this.getEvents("/v1/events", { location: this.state.search })
+      .then(result => {
+        this.setState({ eventful: result.data.events.event });
+      })
+      .catch(err => console.log(err));
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
-    API.getDogsOfBreed(this.state.search)
-      .then(res => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-        this.setState({ results: res.data.message, error: "" });
-      })
-      .catch(err => this.setState({ error: err.message }));
-  };
   render() {
     return (
       <div>
