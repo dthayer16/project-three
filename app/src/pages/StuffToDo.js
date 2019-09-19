@@ -33,7 +33,7 @@ class StuffToDo extends Component {
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
     API.getEvents();
-    // this.getYelp();
+    API.getYelp();
   }
 
   handleInputChange = event => {
@@ -67,7 +67,9 @@ class StuffToDo extends Component {
             handleInputChange={this.handleInputChange}
             breeds={this.state.breeds}
           />
-          <SearchResults results={this.state.results} />
+          <SearchResults eventful={this.state.resultEvent.map((event, key) =>
+            <li key={event.id}>{event.title}{event.description}{event.venue_address}</li>
+          )} />
         </Container>
       </div>
     );
