@@ -3,9 +3,10 @@ require("dotenv").config();
 const axios = require("axios");
 const router = require("express").Router();
 
-router.get("/events", function (req, res) {
+router.get("/events/:city", function (req, res) {
+    const city = req.params.city;
 
-    const url = "http://api.eventful.com/json/events/search?app_key=dmcR44C3PdqNC2Dh&location=San+Diego&date=Future&category=music,comedy,family_fun_kids,festivals_parades,movies_film,food,art,holiday,attractions,community,singles_social,outdoors_recreation,performing_arts,animals,sports,other";
+    const url = `http://api.eventful.com/json/events/search?app_key=dmcR44C3PdqNC2Dh&location=${city}&date=Future&category=music,comedy,family_fun_kids,festivals_parades,movies_film,food,art,holiday,attractions,community,singles_social,outdoors_recreation,performing_arts,animals,sports,other`;
 
     axios.get(url)
         .then(response => {
