@@ -4,6 +4,7 @@ import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
 import Axios from "axios";
+import API from "../Utils/API"
 
 class StuffToDo extends Component {
   state = {
@@ -14,25 +15,25 @@ class StuffToDo extends Component {
   };
 
   getEvents = () => {
-    Axios.get("/v1/events")
+    Axios.get("/v1/events/San+Diego")
       .then(result => {
         this.setState({ eventful: result.data.events.event });
       })
       .catch(err => console.log(err));
   };
 
-  getYelp = () => {
-    Axios.get("/v1/yelp")
-      .then(result => {
-        this.setState({ yelp: result.data.businesses });
-      })
-      .catch(err => console.log(err));
-  };
+  // getYelp = () => {
+  //   Axios.get("/v1/yelp")
+  //     .then(result => {
+  //       this.setState({ yelp: result.data.businesses });
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    this.getEvents();
-    this.getYelp();
+    API.getEvents();
+    // this.getYelp();
   }
 
   handleInputChange = event => {
@@ -43,7 +44,7 @@ class StuffToDo extends Component {
   }
 
   handleFormSubmit = () => {
-    this.getEvents("/v1/events", { location: this.state.search })
+    this.getEvents("/v1/events")
       .then(result => {
         this.setState({ eventful: result.data.events.event, yelp: result.data.businesses });
       })
