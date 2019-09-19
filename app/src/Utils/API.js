@@ -10,7 +10,11 @@ export default {
         return axios.get("/v1/yelp/:city");
     },
 
-    getKajak: function (query) {
-        return axios.get("/v1/kajak");
+    getFlight: function (query) {
+        return axios.get("/v1/flight");
+    },
+
+    getHotel: function (query) {
+        return axios.get("/v1/hotel");
     }
 };
