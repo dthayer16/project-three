@@ -5,6 +5,7 @@ const axios = require("axios");
 const yelp = require('yelp-fusion');
 const router = require("express").Router();
 
+router.use("/user", require("./user"));
 
 router.get("/events/:city", function (req, res) {
     const city = req.params.city;
