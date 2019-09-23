@@ -1,50 +1,46 @@
 import React, { Component } from "react";
+import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
-import Axios from "axios";
+import NavFrontPage from "../components/NavBarFrontPage";
 
-class StuffToDo extends Component {
+class Search extends Component {
   state = {
-    search: "San Diego",
-    eventful: [],
-    yelp: [],
+    search: "",
+    results: [],
     error: ""
   };
 
-  getEvents = () => {
-    Axios.get("/v1/events")
-      .then(result => {
-        this.setState({ eventful: result.data.events.event });
-      })
-      .catch(err => console.log(err));
-  };
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    this.getEvents();
+    API.getEvents()
+      .then(res => this.setState({ breeds: res.data.message }))
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleFormSubmit = () => {
-    this.getEvents("/v1/events", { location: this.state.search })
-      .then(result => {
-        this.setState({ eventful: result.data.events.event });
-      })
-      .catch(err => console.log(err));
+    this.setState({ search: event.target.value });
   };
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    API.getDogsOfBreed(this.state.search)
+      .then(res => {
+        if (res.data.status === "error") {
+          throw new Error(res.data.message);
+        }
+        this.setState({ results: res.data.message, error: "" });
+      })
+      .catch(err => this.setState({ error: err.message }));
+  };
   render() {
     return (
       <div>
-        <Container style={{ minHeight: "80%" }}>
-          <h1 className="text-center">Search By Location!</h1>
+        <NavFrontPage/>
+        <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
+          <h1 className="text-center">Where would you like to go?</h1>
           <Alert
             type="danger"
             style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
@@ -54,7 +50,7 @@ class StuffToDo extends Component {
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}
-            breeds={this.state.breeds}
+            search={this.state.search}
           />
           <SearchResults results={this.state.results} />
         </Container>
@@ -63,4 +59,4 @@ class StuffToDo extends Component {
   }
 }
 
-export default StuffToDo;
+export default Search;

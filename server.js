@@ -7,12 +7,13 @@ var mongoose = require("mongoose");
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
 
-var PORT = 3000;
+var PORT = process.env.PORT || 8080;
 
+require("./services/passport.js")
 // Initialize Express
 var app = express();
 
-// Configure middleware
+// Configure middleware 
 
 // Parse request body as JSON
 app.use(express.json());
@@ -21,8 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 // Make public a static folder
 app.use(express.static("app/build"));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+
+// Mongoose Connection
+const db = require("./config/connection");
+db(process.env.MONGODB_URI || "mongodb://localhost/test");
 
 // Routes
 app.use(require("./routes"));

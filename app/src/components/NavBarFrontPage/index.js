@@ -1,9 +1,9 @@
 import React from "react";
 import "./style.css";
-import {Navbar, Button, FormControl, Form, Nav, NavDropdown} from "react-bootstrap";
+import {Navbar, Button, Nav, NavDropdown} from "react-bootstrap";
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
-function Navvy() {
+function NavFrontPage() {
   return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">Name</Navbar.Brand>
@@ -17,14 +17,11 @@ function Navvy() {
                   <NavDropdown.Item href="/about">Form</NavDropdown.Item>
               </NavDropdown>
           </Nav>
-          <Form inline>
-            <FormControl style={{width: "21rem"}} type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-info">Search</Button>
-          </Form>
+
             <Button variant="info" style={{marginLeft: "25rem"}}>Log In/Sign Up</Button>
         </Navbar.Collapse>
       </Navbar>
   );
 }
 
-export default Navvy;
+export default NavFrontPage;
