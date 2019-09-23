@@ -5,6 +5,7 @@ import {Navbar, Button, FormControl, Form, Nav, NavDropdown} from "react-bootstr
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 function Navvy() {
   return (
+<<<<<<< HEAD
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">Name</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -24,6 +25,45 @@ function Navvy() {
             <Button variant="info" style={{marginLeft: "25rem"}}>Log In/Sign Up</Button>
         </Navbar.Collapse>
       </Navbar>
+=======
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link className="navbar-brand" to="/">
+        Project Three
+      </Link>
+      <div>
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link
+              to="/"
+              className={
+                window.location.pathname === "/" || window.location.pathname === "/about"
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+            >
+              About
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/stufftodo"
+              className={window.location.pathname === "/stufftodo" ? "nav-link active" : "nav-link"}
+            >
+              Stuff to Do
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/traveloptions"
+              className={window.location.pathname === "/traveloptions" ? "nav-link active" : "nav-link"}
+            >
+              Travel Options
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+>>>>>>> master
   );
 }
 
