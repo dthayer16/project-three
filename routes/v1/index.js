@@ -1,9 +1,23 @@
 require("dotenv").config();
-var request = require("request");
 
+const router = require("express").Router();
+const db = require("../../models");
+const jwt = require("jsonwebtoken");
+const config = require("../../config");
+const passport = require("passport");
+const { requireAuth, requireSignin } = require("../auth");
 const axios = require("axios");
 const yelp = require('yelp-fusion');
-const router = require("express").Router();
+const request = require("request");
+
+function tokenizer(user) {
+    return jwt.sign(
+        {
+            sub: user
+        },
+        config.secret
+    );
+}
 
 router.use("/user", require("./user"));
 
@@ -45,7 +59,7 @@ router.get("/yelp/:city", function (req, res) {
 
 router.get("/flight", function (req, res) {
 
-const kajakKey = process.env.kajakKey;
+    const kajakKey = process.env.kajakKey;
     // const originOne = "SGN";
     // const destinationOne = "DAD";
     // const departDateOne = "2018-12-20";
@@ -95,8 +109,8 @@ const kajakKey = process.env.kajakKey;
     //         res.status(422).json(err);
     //     });
 
-    request(options, function(err, response, body) {
-        if(err) throw new Error(err);
+    request(options, function (err, response, body) {
+        if (err) throw new Error(err);
         console.log(body)
         // res.json(body);
     })
@@ -129,6 +143,49 @@ router.get("/hotel", function (req, res) {
         })
         .catch(err => {
             res.status(422).json(err);
+        });
+});
+
+router.post("/signin", requireSignin, function (req, res) {
+
+    //check if user exists
+    db.User.findOne({ email: req.body.email }).then(dbUser => {
+        if (dbUser === null) {
+            res.status(400).send("BAD LOG IN, UNAUTHORIZED");
+        } else {
+
+            res.json({
+                userId: dbUser._id,
+                token: tokenizer(req.user),
+                name: dbUser.name
+            });
+        }
+    })
+});
+
+router.post("/signup", function (req, res) {
+    const { name, email, password } = req.body;
+
+    if (!email || !password || !name) {
+        res.status(422).send({ error: "You must provide a name, email and password" });
+    }
+
+    db.User.findOne({ email })
+        .then(dbuser => {
+            // if the user exists return an error
+            if (dbuser) {
+                return res.status(422).send({ error: "Email already in use" });
+            }
+            //create new user object
+            const user = new db.User({ name, email, password });
+            // save the user
+            user.save().then(user => {
+                // respond with the success if the user existed
+                res.json({ token: tokenizer(user) });
+            });
+        })
+        .catch(err => {
+            return next(err);
         });
 });
 
