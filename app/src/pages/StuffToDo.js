@@ -30,7 +30,6 @@ class StuffToDo extends Component {
   //     .catch(err => console.log(err));
   // };
 
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
     API.getEvents();
     API.getYelp();
