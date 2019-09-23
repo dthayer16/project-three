@@ -4,17 +4,18 @@ import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
 import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
+import NavFrontPage from "../components/NavBarFrontPage";
 
-class TravelDetails extends Component {
+class Search extends Component {
   state = {
     search: "",
-    kajak: [],
+    results: [],
     error: ""
   };
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    API.getBaseBreedsList()
+    API.getEvents()
       .then(res => this.setState({ breeds: res.data.message }))
       .catch(err => console.log(err));
   }
@@ -37,8 +38,9 @@ class TravelDetails extends Component {
   render() {
     return (
       <div>
-        <Container style={{ minHeight: "80%" }}>
-          <h1 className="text-center">Search By Breed!</h1>
+        <NavFrontPage/>
+        <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
+          <h1 className="text-center">Where would you like to go?</h1>
           <Alert
             type="danger"
             style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
@@ -48,7 +50,7 @@ class TravelDetails extends Component {
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}
-            breeds={this.state.breeds}
+            search={this.state.search}
           />
           <SearchResults results={this.state.results} />
         </Container>
@@ -57,4 +59,4 @@ class TravelDetails extends Component {
   }
 }
 
-export default TravelDetails;
+export default Search;
