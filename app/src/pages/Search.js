@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
-import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
 import NavFrontPage from "../components/NavBarFrontPage";
 
@@ -26,7 +25,7 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getDogsOfBreed(this.state.search)
+    API.getEvents(this.state.search)
       .then(res => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
@@ -52,7 +51,6 @@ class Search extends Component {
             handleInputChange={this.handleInputChange}
             search={this.state.search}
           />
-          <SearchResults results={this.state.results} />
         </Container>
       </div>
     );

@@ -23,13 +23,13 @@ router.use("/user", require("./user"));
 
 router.get("/events/:city", function (req, res) {
     const city = req.params.city;
-    const eventfulKey = process.env.eventfulKey
+    const eventfulKey = process.env.eventfulKey;
     const url = `http://api.eventful.com/json/events/search?app_key=${eventfulKey}&location=${city}&date=Future&category=music,comedy,family_fun_kids,festivals_parades,movies_film,food,art,holiday,attractions,community,singles_social,outdoors_recreation,performing_arts,animals,sports,other`;
 
     axios.get(url)
         .then(response => {
-            console.log(response.data);
-            res.status(200).send(response.data);
+            console.log(response.data.events);
+            res.status(200).send(response.data.events);
         })
         .catch(err => {
             res.status(422).json(err);
