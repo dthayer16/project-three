@@ -5,11 +5,11 @@ import {Card, Button} from "react-bootstrap";
 function EventCard(props) {
   return (
       <Card>
-          <Card.Header>Featured</Card.Header>
+          <Card.Header><h3>{props.title}</h3></Card.Header>
           <Card.Body>
-              <Card.Title>Special title treatment</Card.Title>
-              <Card.Text>
-                  With supporting text below as a natural lead-in to additional content.
+              <Card.Title>{props.address}</Card.Title>
+              <Card.Text style={{overflow: "hidden"}}>
+                  {props.description}
               </Card.Text>
               <Button variant="info">Save Event</Button>
           </Card.Body>
