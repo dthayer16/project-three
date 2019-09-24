@@ -8,7 +8,7 @@ import NavFrontPage from "../components/NavBarFrontPage";
 class Search extends Component {
   state = {
     search: "",
-    results: [],
+
     error: ""
   };
 
