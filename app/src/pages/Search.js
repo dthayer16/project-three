@@ -2,20 +2,22 @@ import React, { Component } from "react";
 import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
-import Alert from "../components/Alert";
+import Alert from "../components/Rating";
 import NavFrontPage from "../components/NavBarFrontPage";
 
 class Search extends Component {
   state = {
     search: "",
-
     error: ""
   };
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
     API.getEvents()
-      .then(res => this.setState({ breeds: res.data.message }))
+      .then(res => this.setState({ search: res.data.message }))
+      .catch(err => console.log(err));
+    API.getYelp()
+      .then(res => this.setState({ search: res.data.message }))
       .catch(err => console.log(err));
   }
 
@@ -40,12 +42,7 @@ class Search extends Component {
         <NavFrontPage/>
         <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
           <h1 className="text-center">Where would you like to go?</h1>
-          <Alert
-            type="danger"
-            style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
-          >
-            {this.state.error}
-          </Alert>
+          <br/><br/>
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}

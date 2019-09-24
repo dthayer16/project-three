@@ -6,6 +6,7 @@ import Search from "./pages/Search";
 import Saved from "./pages/Saved";
 import Wrapper from "./components/Wrapper";
 import Register from "./pages/Register";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route exact path="/saved" component={Saved} />
             <Route exact path="/register" component={Register} />
           </Wrapper>
-
+          <Footer/>
         </div>
       </Router>
 

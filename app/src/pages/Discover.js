@@ -8,13 +8,8 @@ import API from "../Utils/API";
 
 class Discover extends Component {
     state = {
-        search: "California",
-        eventful: [{
-            id: "298yhnso38yr",
-            title: "Howdy",
-            description: "there",
-            venue_address: "partner"
-        }],
+        search: "",
+        eventful: [],
         yelp: []
     };
 
@@ -24,6 +19,12 @@ class Discover extends Component {
             .then(res => {
                 console.log(res.data);
                 this.setState({eventful: res.data.event})
+            })
+            .catch(err => console.log(err));
+        API.getYelp()
+            .then(res => {
+                console.log(res.data.businesses);
+                this.setState({yelp: res.data.businesses})
             })
             .catch(err => console.log(err));
     }
@@ -63,30 +64,43 @@ class Discover extends Component {
     };
 
     render() {
-        const {eventful} = this.state;
+        const {eventful, yelp} = this.state;
         return (
             <div>
                 <Navvy/>
                 <br/>
                 <Container>
-                    <h5 className="">Results for {this.state.search}</h5>
+                    <h3 className="">Results for {this.state.search}</h3>
                     <Jumbotron>
                         <Row>
                             <Col>
-                                <h6 className="text-center"> Events</h6>
+                                <h4 className="text-center"> Events Happening:</h4>
 
                                 {eventful.length > 0 && eventful.map((event) =>
                                     <EventCard
                                         key={event.id}
                                         title={event.title}
                                         description={event.description}
-                                        address={event.venue_address}
+                                        url={event.url}
+                                        date={event.start_time}
                                     />
                                 )}
                             </Col>
                             <Col>
-                                <h6 className="text-center"> Food</h6>
-                                <YelpCard/>
+                                <h4 className="text-center"> Where to Eat:</h4>
+
+                                {yelp.length > 0 && yelp.map((data) =>
+                                    <YelpCard
+                                        key={data.id}
+                                        name={data.name}
+                                        url={data.url}
+                                        price={data.price}
+                                        image_url={data.image_url}
+                                        rating={data.rating}
+                                        categories={data.categories}
+                                        review_count={data.review_count}
+                                    />
+                                )}
                             </Col>
                         </Row>
                     </Jumbotron>

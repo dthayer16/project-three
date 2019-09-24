@@ -1,11 +1,12 @@
 import React from "react";
-import "./style.css";
 
 function Footer() {
   return (
-    <footer className="footer">
-      <span>Project Three 2019</span>
-    </footer>
+      <footer>
+          <div className="text-center py-3" style={{margin: "-50px 3px 3px 3px", background: "#17A2B8"}}>Github:
+              <a href="https://github.com/dthayer16/project-three" style={{color: "black", marginLeft: "10px"}}><i className="fab fa-github"> </i></a>
+          </div>
+      </footer>
   );
 }
 

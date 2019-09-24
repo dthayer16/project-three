@@ -50,8 +50,12 @@ router.get("/yelp/:city", function (req, res) {
 
     client.search(searchRequest)
         .then(response => {
-            console.log(response)
-            res.status(200).json(response)
+
+            // const firstResult = response.jsonBody;
+
+            console.log(response.jsonBody);
+            res.status(200).json(response.jsonBody)
+
         }).catch(err => {
             res.status(422).json(err);
         });
