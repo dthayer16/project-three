@@ -11,3 +11,9 @@ div[data-reactroot] {
   padding: 0;
   margin: 0;
 }
+#yelpBurst {
+  height: 15%;
+  width: 15%;
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
