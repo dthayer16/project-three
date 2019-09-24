@@ -22,6 +22,7 @@ function tokenizer(user) {
 router.use("/user", require("./user"));
 
 router.get("/events/:city", function (req, res) {
+    console.log("event route hit");
     const city = req.params.city;
     const eventfulKey = process.env.eventfulKey;
     const url = `http://api.eventful.com/json/events/search?app_key=${eventfulKey}&location=${city}&date=Future&category=music,comedy,family_fun_kids,festivals_parades,movies_film,food,art,holiday,attractions,community,singles_social,outdoors_recreation,performing_arts,animals,sports,other`;
@@ -44,7 +45,9 @@ router.get("/yelp/:city", function (req, res) {
     const yelpKey = process.env.yelpKey;
     const searchRequest = {
         term: '',
-        location: req.params.city
+        location: req.params.city,
+        limit: 10,
+        categories: 'food'
     };
     const client = yelp.client(yelpKey);
 

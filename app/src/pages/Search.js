@@ -4,6 +4,7 @@ import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
 import Alert from "../components/Rating";
 import NavFrontPage from "../components/NavBarFrontPage";
+import Axios from "axios";
 
 class Search extends Component {
   state = {
@@ -27,14 +28,27 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getEvents(this.state.search)
-      .then(res => {
-        if (res.data.status === "error") {
-          throw new Error(res.data.message);
-        }
-        this.setState({ results: res.data.message, error: "" });
-      })
-      .catch(err => this.setState({ error: err.message }));
+
+    var city = this.state.search;
+    console.log(city)
+    
+    Axios.get("v1/events/" + city)
+    .then(res => {
+      if (res.data.status === "error") {
+        throw new Error(res.data.message);
+      }
+      this.setState({ results: res.data.message, error: "" });
+    })
+    .catch(err => this.setState({ error: err.message }));
+
+    // API.getEvents("/events/" + city) 
+    //   .then(res => {
+    //     if (res.data.status === "error") {
+    //       throw new Error(res.data.message);
+    //     }
+    //     this.setState({ results: res.data.message, error: "" });
+    //   })
+    //   .catch(err => this.setState({ error: err.message }));
   };
   render() {
     return (

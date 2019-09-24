@@ -3,11 +3,11 @@ import axios from "axios"
 
 export default {
     getEvents: function (query) {
-        return axios.get("/v1/events/:city");
+        return axios.get("/v1/events/" + query);
     },
 
     getYelp: function (query) {
-        return axios.get("/v1/yelp/:city");
+        return axios.get("/v1/yelp/"  + query);
     },
 
     getFlight: function (query) {
