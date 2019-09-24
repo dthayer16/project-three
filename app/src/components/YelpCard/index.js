@@ -49,12 +49,13 @@ function YelpCard(props) {
               </Card.Title>
           </Card.Header>
           <Card.Body>
-              <p>
+              <div>
                   {image}    {props.review_count}  reviews
-              </p>
+              </div>
+              <br/>
                   Price: {price}
-              <Card.Text>
                   <hr/>
+              <Card.Text>
                   <img src={props.image_url} alt="Store Image" style={{maxWidth: "340px", maxHeight: "123px"}}/>
               </Card.Text>
               <Button variant="info">Save Food</Button>

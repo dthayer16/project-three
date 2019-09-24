@@ -44,7 +44,8 @@ router.get("/yelp/:city", function (req, res) {
     const yelpKey = process.env.yelpKey;
     const searchRequest = {
         term: '',
-        location: req.params.city
+        location: req.params.city,
+        limit: 10
     };
     const client = yelp.client(yelpKey);
 

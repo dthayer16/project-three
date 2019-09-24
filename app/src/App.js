@@ -7,6 +7,7 @@ import Saved from "./pages/Saved";
 import Wrapper from "./components/Wrapper";
 import Register from "./pages/Register";
 import Footer from "./components/Footer";
+import Tou
 
 function App() {
   return (
