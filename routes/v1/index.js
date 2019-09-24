@@ -46,12 +46,8 @@ router.get("/yelp/:city", function (req, res) {
     const searchRequest = {
         term: '',
         location: req.params.city,
-<<<<<<< HEAD
-        limit: 10
-=======
         limit: 10,
         categories: 'food'
->>>>>>> 756381f75c88076954b2e77b1e2da57b598642a8
     };
     const client = yelp.client(yelpKey);
 
@@ -97,7 +93,7 @@ router.get("/flight", function (req, res) {
             "x-rapidapi-key": kajakKey
         }
 
-    }
+    };
     // const url = `https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?&origin1=${originOne}&destination1=${destinationOne}&departdate1=${departDateOne}&cabin=${cabin}&currency=${currency}&adults=${adults}&bags=${bags}`;
 
     // const settings = {
@@ -146,7 +142,7 @@ router.get("/hotel", function (req, res) {
             "x-rapidapi-host": "apidojo-kayak-v1.p.rapidapi.com",
             "x-rapidapi-key": kajakKey
         }
-    }
+    };
 
     axios.get(settings)
         .then(response => {
