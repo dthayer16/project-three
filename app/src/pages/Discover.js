@@ -8,20 +8,22 @@ import API from "../Utils/API";
 
 class Discover extends Component {
     state = {
-        search: "",
+        search: "phoenix",
         eventful: [],
         yelp: []
     };
 
     // When the component mounts, load the next dog to be displayed
     componentDidMount() {
-        API.getEvents()
+        var city = this.state.search;
+   
+        API.getEvents(city)
             .then(res => {
                 console.log(res.data);
                 this.setState({eventful: res.data.event})
             })
             .catch(err => console.log(err));
-        API.getYelp()
+        API.getYelp(city)
             .then(res => {
                 console.log(res.data.businesses);
                 this.setState({yelp: res.data.businesses})
