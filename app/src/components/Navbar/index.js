@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+<<<<<<< HEAD
 import { Navbar, Button, FormControl, Form, Nav, NavDropdown } from "react-bootstrap";
 import axios from "axios";
 
@@ -39,6 +40,16 @@ class Navvy extends React.Component {
   render() {
     return (
       <Navbar bg="info" expand="lg" style={{ margin: "3px" }}>
+=======
+import {Navbar, Button, FormControl, Form, Nav, NavDropdown, InputGroup} from "react-bootstrap";
+import SearchForm from "../SearchForm";
+
+
+// Depending on the current path, this component sets the "active" class on the appropriate navigation link item
+function Navvy(props) {
+  return (
+      <Navbar bg="info" expand="lg" style={{margin: "3px"}}>
+>>>>>>> d0eb64f146ad6bd78369fecfde777af40f44e71c
         <Navbar.Brand href="/">Where to?</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -63,8 +74,26 @@ class Navvy extends React.Component {
             </NavDropdown>
           </Nav>
           <Form inline>
+<<<<<<< HEAD
             <FormControl style={{ width: "21rem" }} type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-light"><i className="fas fa-search"> </i></Button>
+=======
+              <div className="form-group">
+                  <InputGroup size="md">
+                      <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                   onChange={props.handleInputChange}
+                                   name="search"
+                                   type="text"
+                                   className="form-control"
+                                   placeholder="San Diego, CA"
+                      />
+                      <InputGroup.Append>
+                          <Button variant="info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
+                      </InputGroup.Append>
+                  </InputGroup>
+
+              </div>
+>>>>>>> d0eb64f146ad6bd78369fecfde777af40f44e71c
           </Form>
         </Navbar.Collapse>
       </Navbar>
