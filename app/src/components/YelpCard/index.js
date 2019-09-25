@@ -41,26 +41,26 @@ function YelpCard(props) {
         price = "n/a"
     }
 
-    return (
-        <Card>
-            <Card.Header>
-                <Card.Title>
-                    <a href={props.url} target="blank"><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="Yelp Burst Photo" id="yelpBurst" /></a>{props.name}
-                </Card.Title>
-            </Card.Header>
-            <Card.Body>
-                <p>
-                    {image}    {props.review_count}  reviews
-              </p>
-                Price: {price}
-                <Card.Text>
-                    <hr />
-                    <img src={props.image_url} alt="Store Image" style={{ maxWidth: "340px", maxHeight: "123px" }} />
-                </Card.Text>
-                <Button variant="info">Save Food</Button>
-            </Card.Body>
-        </Card>
-
+  return (
+      <Card>
+          <Card.Header>
+              <Card.Title>
+                  <a href={props.url}><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="" id="yelpBurst"/></a>{props.name}
+              </Card.Title>
+          </Card.Header>
+          <Card.Body>
+              <div>
+                  {image}    {props.review_count}  reviews
+              </div>
+              <br/>
+                  Price: {price}
+                  <hr/>
+              <Card.Text>
+                  <img src={props.image_url} alt="" style={{maxWidth: "340px", maxHeight: "123px"}}/>
+              </Card.Text>
+              <Button variant="info">Save Food</Button>
+          </Card.Body>
+      </Card>
     );
 }
 

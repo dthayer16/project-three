@@ -93,7 +93,7 @@ router.get("/flight", function (req, res) {
             "x-rapidapi-key": kajakKey
         }
 
-    }
+    };
     // const url = `https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?&origin1=${originOne}&destination1=${destinationOne}&departdate1=${departDateOne}&cabin=${cabin}&currency=${currency}&adults=${adults}&bags=${bags}`;
 
     // const settings = {
@@ -142,7 +142,7 @@ router.get("/hotel", function (req, res) {
             "x-rapidapi-host": "apidojo-kayak-v1.p.rapidapi.com",
             "x-rapidapi-key": kajakKey
         }
-    }
+    };
 
     axios.get(settings)
         .then(response => {
