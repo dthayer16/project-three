@@ -1,11 +1,9 @@
 import React from "react";
-import {Form} from "react-bootstrap";
-import NavLogged from "../components/NavBarLoggedIn";
+import { Form } from "react-bootstrap";
 
 function About() {
   return (
     <div>
-      <NavLogged/>
       <Form>
         <Form.Group controlId="exampleForm.ControlInput1">
           <Form.Label>Email address</Form.Label>

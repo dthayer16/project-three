@@ -1,46 +1,81 @@
 import React from "react";
 import "./style.css";
-import {Navbar, Button, FormControl, Form, Nav, NavDropdown, InputGroup} from "react-bootstrap";
-import SearchForm from "../SearchForm";
+import { Link } from "react-router-dom";
+import { Navbar, Button, FormControl, Form, Nav, NavDropdown } from "react-bootstrap";
+import axios from "axios";
 
+class Navvy extends React.Component {
 
-// Depending on the current path, this component sets the "active" class on the appropriate navigation link item
-function Navvy(props) {
-  return (
-      <Navbar bg="info" expand="lg" style={{margin: "3px"}}>
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  logOut = (e) => {
+    console.log('logging out')
+    axios.post('/v1/user/logout')
+      .then(response => {
+        console.log(response.data)
+        if (response.status === 200) {
+          this.props.updateUser({
+            loggedIn: false,
+            email: null
+          })
+          localStorage.clear();
+        }
+      }).catch(error => {
+        console.log('Logout error')
+      })
+  }
+
+  render() {
+    return (
+      <Navbar bg="info" expand="lg" style={{ margin: "3px" }}>
         <Navbar.Brand href="/">Where to?</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
 
-              <NavDropdown title="Navigation" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="/">Home</NavDropdown.Item>
-                  <NavDropdown.Item href="/discover">Results</NavDropdown.Item>
-                  <NavDropdown.Item href="/about">Form</NavDropdown.Item>
-                  <NavDropdown.Item href="/register">Log in/Sign Up</NavDropdown.Item>
-              </NavDropdown>
+            <NavDropdown title="Navigation" id="basic-nav-dropdown">
+              {this.props.loggedIn && (
+                <NavDropdown.Header>Signed in as: <span style={{ color: '#17A2B8' }}>{this.props.email}</span></NavDropdown.Header>
+              )}
+
+              <Link className="dropdown-item" to="/">Home</Link>
+              <Link className="dropdown-item" to="/discover">Results</Link>
+              <Link className="dropdown-item" to="/about">Form</Link>
+
+              {!this.props.loggedIn && (
+                <Link className="dropdown-item" to="/register">Signup</Link>
+              )}
+
+              {!this.props.loggedIn && (
+                <Link className="dropdown-item" to="/login">Log In</Link>
+              )}
+
+              {this.props.loggedIn && (
+                <Link className="dropdown-item" onClick={this.logOut} to="/">Log Out</Link>
+              )}
+            </NavDropdown>
           </Nav>
           <Form inline>
-              <div className="form-group">
-                  <InputGroup size="md">
-                      <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                   onChange={props.handleInputChange}
-                                   name="search"
-                                   type="text"
-                                   className="form-control"
-                                   placeholder="San Diego, CA"
-                      />
-                      <InputGroup.Append>
-                          <Button variant="info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
-                      </InputGroup.Append>
-                  </InputGroup>
-
-              </div>
+            <FormControl style={{ width: "21rem" }} type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-light"><i className="fas fa-search"> </i></Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
 
-  );
+    );
+  }
 }
 
 export default Navvy;
