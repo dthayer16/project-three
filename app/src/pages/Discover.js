@@ -25,13 +25,13 @@ class Discover extends Component {
    
         API.getEvents(context.search)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data.event);
                 this.setState({eventful: res.data.event})
             })
             .catch(err => console.log(err));
         API.getYelp(context.search)
             .then(res => {
-                console.log(res.data.businesses);
+                // console.log(res.data.businesses);
                 this.setState({yelp: res.data.businesses})
             })
             .catch(err => console.log(err));
@@ -58,7 +58,7 @@ class Discover extends Component {
                     <Jumbotron>
                         <Row>
                             <Col>
-                                <h4 className="text-center"> Events Happening:</h4>
+                                <h4 className="text-center"> Cool Events:</h4>
 
                                 {eventful.length > 0 && eventful.map((event) =>
                                     <EventCard

@@ -12,7 +12,7 @@ import {UserProvider} from "./pages/UserContext";
 class App extends Component {
 
     state = {
-        search: ""
+        search: "Phoenix",
 
     };
 
