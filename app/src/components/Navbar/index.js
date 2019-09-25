@@ -38,6 +38,7 @@ class Navvy extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Navbar bg="info" expand="lg" style={{ margin: "3px" }}>
         <Navbar.Brand href="/">Where to?</Navbar.Brand>
@@ -55,7 +56,7 @@ class Navvy extends React.Component {
               <Link className="dropdown-item" to="/about">Form</Link>
 
               {!this.props.loggedIn && (
-                <Link className="dropdown-item" to="/register">Signup</Link>
+                <Link className="dropdown-item" to="/signup">Signup</Link>
               )}
 
               {!this.props.loggedIn && (

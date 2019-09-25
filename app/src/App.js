@@ -69,7 +69,7 @@ class App extends React.Component {
       <Router>
         <UserProvider value={this.state}>
           <div>
-            <Navvy updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>
+            <Navvy email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>
             <Wrapper>
               <Route exact path="/" component={Search} />
               <Route exact path="/search" component={Search} />
