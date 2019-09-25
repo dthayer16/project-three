@@ -1,4 +1,5 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Discover from "./pages/Discover";
 import About from "./pages/About";
@@ -20,7 +21,7 @@ class App extends Component {
   };
   constructor(e) {
     super();
-    const loggedIn = window.localStorage.getItem("token") ? true : false;
+    const loggedIn = !!window.localStorage.getItem("token");
     this.state = {
       loggedIn,
       email: null
