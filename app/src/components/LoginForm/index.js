@@ -58,7 +58,7 @@ class LoginForm extends Component {
                         password: '',
                         redirectTo: '/'
                     })
-                    this.props.history.push("/home");
+                    this.props.history.push("/");
                 }
             }).catch(error => {
                 console.log('login error: ')
@@ -69,7 +69,7 @@ class LoginForm extends Component {
 
 
     render() {
-        console.log("TUCKER", this.props);
+
         return (
             <Form inline>
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">

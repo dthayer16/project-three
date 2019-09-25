@@ -2,8 +2,6 @@ import React, { Component } from "react";
 // import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
-import NavFrontPage from "../components/NavBarFrontPage";
-// import Axios from "axios";
 import UserContext from "./UserContext";
 
 class Search extends Component {
@@ -11,12 +9,12 @@ class Search extends Component {
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-  const context = this.context;
+    const context = this.context;
   }
 
   handleInputChange = event => {
     this.context.search = event.target.value;
-  console.log(this.context)
+    console.log(this.context)
   };
 
   handleFormSubmit = event => {
@@ -28,10 +26,10 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <NavFrontPage/>
+
         <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
           <h1 className="text-center">Looking to go to {this.context.search}?</h1>
-          <br/><br/>
+          <br /><br />
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}

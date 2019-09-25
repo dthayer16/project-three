@@ -23,16 +23,16 @@ router.post("/signup", function (req, res) {
 
   db.User.findOne({ email })
     .then(dbuser => {
-      // if the user exists return an error
+
       if (dbuser) {
         console.log("Already in use")
         return res.status(422).send({ error: "Email already in use" });
       }
-      //create new user object
+
       const user = new db.User({ email, password });
-      // save the user
+
       user.save().then(user => {
-        // respond with the success if the user existed
+
         res.json({ token: tokenizer(user), user: { email: user.email } });
       });
     })

@@ -1,11 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import YelpCard from "../components/YelpCard";
 import EventCard from "../components/EventCard";
-import {Jumbotron, Container, Col, Row} from "react-bootstrap";
-import Navvy from "../components/Navbar";
+import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
-import FAButton from "../components/FAB";
 import UserContext from "./UserContext";
+import FAButton from "../components/FAB"
 
 
 class Discover extends Component {
@@ -20,23 +19,19 @@ class Discover extends Component {
 
     // When the component mounts, load the next dog to be displayed
     componentDidMount() {
-<<<<<<< HEAD
-        const city = this.state.search;
-=======
         // var city = this.state.search;
         const context = this.context;
->>>>>>> d0eb64f146ad6bd78369fecfde777af40f44e71c
-   
+
         API.getEvents(context.search)
             .then(res => {
                 console.log(res.data);
-                this.setState({eventful: res.data.event})
+                this.setState({ eventful: res.data.event })
             })
             .catch(err => console.log(err));
         API.getYelp(context.search)
             .then(res => {
                 console.log(res.data.businesses);
-                this.setState({yelp: res.data.businesses})
+                this.setState({ yelp: res.data.businesses })
             })
             .catch(err => console.log(err));
     }
@@ -52,11 +47,9 @@ class Discover extends Component {
     };
 
     render() {
-        const {eventful, yelp} = this.state;
+        const { eventful, yelp } = this.state;
         return (
             <div>
-                <Navvy/>
-                <br/>
                 <Container>
                     <h3 className="">Results for {this.context.search}</h3>
                     <Jumbotron>
@@ -92,7 +85,7 @@ class Discover extends Component {
                             </Col>
                         </Row>
                     </Jumbotron>
-                    <FAButton/>
+                    <FAButton />
                 </Container>
             </div>
         );
