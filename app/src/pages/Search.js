@@ -1,66 +1,41 @@
 import React, { Component } from "react";
-import API from "../Utils/API";
+// import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
-import Alert from "../components/Rating";
 import NavFrontPage from "../components/NavBarFrontPage";
-import Axios from "axios";
+// import Axios from "axios";
+import UserContext from "./UserContext";
 
 class Search extends Component {
-  state = {
-    search: "",
-    error: ""
-  };
+  static contextType = UserContext;
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    API.getEvents()
-      .then(res => this.setState({ search: res.data.message }))
-      .catch(err => console.log(err));
-    API.getYelp()
-      .then(res => this.setState({ search: res.data.message }))
-      .catch(err => console.log(err));
+  const context = this.context;
   }
 
   handleInputChange = event => {
-    this.setState({ search: event.target.value });
+    this.context.search = event.target.value;
+  console.log(this.context)
   };
 
   handleFormSubmit = event => {
     event.preventDefault();
-
-    var city = this.state.search;
-    console.log(city)
-    
-    Axios.get("v1/events/" + city)
-    .then(res => {
-      if (res.data.status === "error") {
-        throw new Error(res.data.message);
-      }
-      this.setState({ results: res.data.message, error: "" });
-    })
-    .catch(err => this.setState({ error: err.message }));
-
-    // API.getEvents("/events/" + city) 
-    //   .then(res => {
-    //     if (res.data.status === "error") {
-    //       throw new Error(res.data.message);
-    //     }
-    //     this.setState({ results: res.data.message, error: "" });
-    //   })
-    //   .catch(err => this.setState({ error: err.message }));
+    this.props.history.push('/discover');
+    this.setState({ search: this.context.search });
+    console.log("form submitted")
   };
   render() {
     return (
       <div>
         <NavFrontPage/>
         <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
-          <h1 className="text-center">Where would you like to go?</h1>
+          <h1 className="text-center">Looking to go to {this.context.search}?</h1>
           <br/><br/>
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}
-            search={this.state.search}
+            search={this.context.search}
           />
         </Container>
       </div>

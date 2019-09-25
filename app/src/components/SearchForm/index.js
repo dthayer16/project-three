@@ -9,17 +9,13 @@ function SearchForm(props) {
             <div className="form-group">
                 <InputGroup size="md">
                     <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                 value={props.search}
                                  onChange={props.handleInputChange}
                                  name="search"
                                  type="text"
                                  className="form-control"
                                  placeholder="San Diego, CA"
-                                 id="breed"
                     />
-                    <InputGroup.Append>
-                        <Button variant="outline-info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
-                    </InputGroup.Append>
+                        <Button type="submit" variant="outline-info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
                 </InputGroup>
 
             </div>

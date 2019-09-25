@@ -1,9 +1,11 @@
 import React from "react";
 import "./style.css";
-import {Navbar, Button, FormControl, Form, Nav, NavDropdown} from "react-bootstrap";
+import {Navbar, Button, FormControl, Form, Nav, NavDropdown, InputGroup} from "react-bootstrap";
+import SearchForm from "../SearchForm";
+
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
-function Navvy() {
+function Navvy(props) {
   return (
       <Navbar bg="info" expand="lg" style={{margin: "3px"}}>
         <Navbar.Brand href="/">Where to?</Navbar.Brand>
@@ -19,8 +21,21 @@ function Navvy() {
               </NavDropdown>
           </Nav>
           <Form inline>
-            <FormControl style={{width: "21rem"}} type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light"><i className="fas fa-search"> </i></Button>
+              <div className="form-group">
+                  <InputGroup size="md">
+                      <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+                                   onChange={props.handleInputChange}
+                                   name="search"
+                                   type="text"
+                                   className="form-control"
+                                   placeholder="San Diego, CA"
+                      />
+                      <InputGroup.Append>
+                          <Button variant="info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
+                      </InputGroup.Append>
+                  </InputGroup>
+
+              </div>
           </Form>
         </Navbar.Collapse>
       </Navbar>

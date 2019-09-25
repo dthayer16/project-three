@@ -45,7 +45,7 @@ function YelpCard(props) {
       <Card>
           <Card.Header>
               <Card.Title>
-                  <a href={props.url}><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="Yelp Burst Photo" id="yelpBurst"/></a>{props.name}
+                  <a href={props.url}><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="" id="yelpBurst"/></a>{props.name}
               </Card.Title>
           </Card.Header>
           <Card.Body>
@@ -56,7 +56,7 @@ function YelpCard(props) {
                   Price: {price}
                   <hr/>
               <Card.Text>
-                  <img src={props.image_url} alt="Store Image" style={{maxWidth: "340px", maxHeight: "123px"}}/>
+                  <img src={props.image_url} alt="" style={{maxWidth: "340px", maxHeight: "123px"}}/>
               </Card.Text>
               <Button variant="info">Save Food</Button>
           </Card.Body>
