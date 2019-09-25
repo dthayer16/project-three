@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Discover from "./pages/Discover";
 import About from "./pages/About";
@@ -70,7 +70,7 @@ class App extends Component {
       <Router>
         <UserProvider value={this.state}>
           <div>
-            <Navvy updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>
+            <Navvy email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>
             <Wrapper>
               <Route exact path="/" component={Search} />
               <Route exact path="/search" component={Search} />
