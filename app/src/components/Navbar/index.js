@@ -38,6 +38,7 @@ class Navvy extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Navbar bg="info" expand="lg" style={{ margin: "3px" }}>
         <Navbar.Brand href="/">Where to?</Navbar.Brand>
