@@ -12,9 +12,10 @@ import Navvy from "./components/Navbar"
 import axios from "axios";
 import { UserProvider } from "./pages/UserContext";
 
-class App extends React.Component {
-  state = {
-    search: ""
+class App extends Component {
+
+    state = {
+        search: "Phoenix"
 
   };
   constructor(e) {

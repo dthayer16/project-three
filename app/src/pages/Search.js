@@ -9,7 +9,8 @@ class Search extends Component {
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    const context = this.context;
+  // const context = this.context;
+
   }
 
   handleInputChange = event => {
@@ -28,8 +29,9 @@ class Search extends Component {
       <div>
 
         <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
-          <h1 className="text-center">Looking to go to {this.context.search}?</h1>
-          <br /><br />
+          <h1 className="text-center">Where To?</h1>
+          <br/><br/>
+
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}
