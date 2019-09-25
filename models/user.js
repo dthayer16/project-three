@@ -13,6 +13,7 @@ UserSchema.pre("save", function (next) {
     if (err) {
       return next(err);
     }
+
     bcrypt.hash(this.password, salt, (err, hash) => {
       if (err) {
         return next(err);
@@ -22,6 +23,7 @@ UserSchema.pre("save", function (next) {
     });
   });
 });
+
 // create a method to check a users password
 UserSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
@@ -31,5 +33,6 @@ UserSchema.methods.comparePassword = function (candidatePassword, callback) {
     callback(null, isMatch);
   });
 };
+
 const UserModel = mongoose.model("User", UserSchema);
 module.exports = UserModel;
