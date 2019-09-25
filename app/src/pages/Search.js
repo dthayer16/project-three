@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import API from "../Utils/API";
 import Container from "../components/Container";
 import SearchForm from "../components/SearchForm";
-import Alert from "../components/Rating";
 import NavFrontPage from "../components/NavBarFrontPage";
 import Axios from "axios";
 
