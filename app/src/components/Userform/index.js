@@ -12,12 +12,12 @@ import axios from 'axios';
 class userform extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       email: '',
       password: '',
       redirectTo: null
-    }
+    };
 
     console.log(props)
   }
@@ -30,7 +30,7 @@ class userform extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log('handleSubmit')
+    console.log('handleSubmit');
 
     axios
       .post('v1/user/signup', {
@@ -38,24 +38,24 @@ class userform extends React.Component {
         password: this.state.password
       })
       .then(response => {
-        console.log('login response: ')
-        console.log("test")
+        console.log('login response: ');
+        console.log("test");
         if (!response.data.errmsg) {
-          console.log("successful signup")
+          console.log("successful signup");
           // update App.js state
-          console.log(this.props)
+          console.log(this.props);
           localStorage.setItem("token", response.data.token);
 
           this.props.updateUser({
             loggedIn: true,
             email: response.data.email
           })
-          console.log(this.state)
+          console.log(this.state);
           // update the state to redirect to home
           this.props.history.push("/home");
         }
       }).catch(error => {
-        console.log('sign up error: ')
+        console.log('sign up error: ');
         console.log(error);
 
       })

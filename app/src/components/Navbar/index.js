@@ -55,7 +55,7 @@ class Navvy extends React.Component {
               <Link className="dropdown-item" to="/about">Form</Link>
 
               {!this.props.loggedIn && (
-                <Link className="dropdown-item" to="/register">Signup</Link>
+                <Link className="dropdown-item" to="/signup">Signup</Link>
               )}
 
               {!this.props.loggedIn && (
