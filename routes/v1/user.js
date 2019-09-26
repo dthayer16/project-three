@@ -7,7 +7,7 @@ router.get("/info", requireAuth, function (req, res) {
 });
 
 router.post("/signin", requireSignin, function (req, res) {
-  console.log("sign-in route hit")
+  console.log("sign-in route hit");
   console.log(req.body);
   res.json({ token: tokenizer(req.user), email: req.user.email });
 });
@@ -25,7 +25,7 @@ router.post("/signup", function (req, res) {
     .then(dbuser => {
 
       if (dbuser) {
-        console.log("Already in use")
+        console.log("Already in use");
         return res.status(422).send({ error: "Email already in use" });
       }
 
@@ -43,11 +43,11 @@ router.post("/signup", function (req, res) {
 
 router.post('/logout', (req, res) => {
   if (req.user) {
-    req.logout()
+    req.logout();
     res.send({ msg: 'logging out' })
   } else {
     res.send({ msg: 'no user to log out' })
   }
-})
+});
 
 module.exports = router;

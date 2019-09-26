@@ -59,7 +59,7 @@ class Discover extends Component {
                             <Col>
                                 <h4 className="text-center"> Cool Events:</h4>
 
-                                {eventful.length > 0 && eventful.map((event) =>
+                                {eventful ? eventful.map((event) =>
                                     <EventCard
                                         key={event.id}
                                         title={event.title}
@@ -67,7 +67,7 @@ class Discover extends Component {
                                         url={event.url}
                                         date={event.start_time}
                                     />
-                                )}
+                                ) : <h1> No Events </h1>}
                             </Col>
                             <Col>
                                 <h4 className="text-center"> Where to Eat:</h4>
@@ -80,7 +80,6 @@ class Discover extends Component {
                                         price={data.price}
                                         image_url={data.image_url}
                                         rating={data.rating}
-                                        categories={data.categories}
                                         review_count={data.review_count}
                                     />
                                 )}
