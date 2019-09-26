@@ -24,14 +24,14 @@ class Discover extends Component {
 
         API.getEvents(context.search)
             .then(res => {
-                // console.log(res.data.event);
+                console.log(res.data.event);
                 this.setState({eventful: res.data.event})
 
             })
             .catch(err => console.log(err));
         API.getYelp(context.search)
             .then(res => {
-                // console.log(res.data.businesses);
+                console.log(res.data.businesses);
                 this.setState({yelp: res.data.businesses})
 
             })
@@ -61,12 +61,14 @@ class Discover extends Component {
 
                                 {eventful.length > 0 && eventful.map((event) =>
                                     <EventCard
-                                        key={event.id}
-                                        title={event.title}
-                                        description={event.description}
-                                        url={event.url}
-                                        date={event.start_time}
+                                    key={event.id}
+                                    title={event.title}
+                                    description={event.description}
+                                    url={event.url}
+                                    date={event.start_time}
                                     />
+
+
                                 )}
                             </Col>
                             <Col>
