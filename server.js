@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 var express = require("express");
-var mongoose = require("mongoose");
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -36,7 +35,7 @@ app.use(require("./routes"));
 // Route for grabbing a specific User by id, populate it with it's note
 app.get("/user/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.User.findOne({ _id: req.params.id })
+    $.User.findOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
         .populate("SavedYelp")
         .populate("SavedEventful")
@@ -52,7 +51,7 @@ app.get("/user/:id", function(req, res) {
 //Delete Event Method
 app.post("/event/delete/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.Article.findOne({ _id: req.params.id })
+    $.Article.findOne({ _id: req.params.id })
         .update({ saved: false })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
@@ -67,7 +66,7 @@ app.post("/event/delete/:id", function(req, res) {
 //Delete Yelp Method
 app.post("/yelp/delete/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.Article.findOne({ _id: req.params.id })
+    $.Article.findOne({ _id: req.params.id })
         .update({ saved: false })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
@@ -81,7 +80,7 @@ app.post("/yelp/delete/:id", function(req, res) {
 
 //Route for getting saved Articles from the db
 app.get("/saved", function(req, res){
-    db.Article.find({"saved": true}, function(error, data) {
+    $.Article.find({"saved": true}, function(error, data) {
         let savedData = {
             article: data
         };
@@ -95,7 +94,7 @@ app.get("/saved", function(req, res){
 //Save single Yelp
 app.post("/yelp/save/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.Article.findOne({ _id: req.params.id })
+    $.Article.findOne({ _id: req.params.id })
         .update({ saved: true })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
@@ -109,7 +108,7 @@ app.post("/yelp/save/:id", function(req, res) {
 //Save single Event
 app.post("/event/save/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.Article.findOne({ _id: req.params.id })
+    $.Article.findOne({ _id: req.params.id })
         .update({ saved: true })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
