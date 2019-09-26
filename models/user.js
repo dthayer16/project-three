@@ -2,9 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
+
 const UserSchema = new Schema({
   email: { type: String, required: true, lowercase: true },
-  password: String
+  password: String,
+  savedYelp: [{
+    type: Schema.Types.ObjectID,
+    ref: "SavedYelp"
+  }],
+  savedEventful: [{
+    type: Schema.Types.ObjectID,
+    ref: "SavedEventful"
+  }]
 });
 
 // On save hook, encrypt password

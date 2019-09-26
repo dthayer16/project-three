@@ -80,7 +80,6 @@ class Discover extends Component {
                                         price={data.price}
                                         image_url={data.image_url}
                                         rating={data.rating}
-                                        categories={data.categories}
                                         review_count={data.review_count}
                                     />
                                 )}
