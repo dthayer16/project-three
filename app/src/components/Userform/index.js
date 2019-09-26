@@ -44,13 +44,12 @@ class userform extends React.Component {
           console.log("successful signup");
           // update App.js state
           console.log(this.props);
-          localStorage.setItem("token", response.data.token);
 
           this.props.updateUser({
             loggedIn: true,
-            email: response.data.email
+            email: response.data.email,
+            token: response.data.token
           })
-          console.log(this.state);
           // update the state to redirect to home
           this.props.history.push("/home");
         }
