@@ -37,8 +37,7 @@ app.get("/user/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     $.User.findOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
-        .populate("SavedYelp")
-        .populate("SavedEventful")
+        .populate("SavedYelp", "SavedEventful")
         .then(function(dbData) {
             // If we were able to successfully find an Article with the given id, send it back to the client
             res.json(dbData);
@@ -51,7 +50,7 @@ app.get("/user/:id", function(req, res) {
 //Delete Event Method
 app.post("/event/delete/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    $.Article.findOne({ _id: req.params.id })
+    $.Article.findOneAndDelete({ _id: req.params.id })
         .update({ saved: false })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
@@ -66,8 +65,7 @@ app.post("/event/delete/:id", function(req, res) {
 //Delete Yelp Method
 app.post("/yelp/delete/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    $.Article.findOne({ _id: req.params.id })
-        .update({ saved: false })
+    $.Article.findOneAndDelete({ _id: req.params.id })
         .then(function(dbArticle) {
             // If we were able to successfully find an Article with the given id, send it back to the client
             res.json(dbArticle);

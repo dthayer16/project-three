@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 // Using the Schema constructor, create a new UserSchema object
 // This is similar to a Sequelize model
 var SavedYelpSchema = new Schema({
-    key: {
+    _id: {
         type: String
     },
     name: {

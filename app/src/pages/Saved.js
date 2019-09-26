@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import YelpCard from "../components/YelpCard";
-import EventCard from "../components/EventCard";
+import EventCardSaved from "../components/EventCardSaved";
+import YelpCardSaved from "../components/YelpCardSaved";
 import {Jumbotron, Container, Col, Row} from "react-bootstrap";
 import Navvy from "../components/Navbar";
 import API from "../Utils/API";
@@ -15,7 +15,7 @@ class Saved extends Component {
     state = {
         search: this.context.search,
         eventful: [],
-        yelp: [],
+        yelp: []
     };
 
     // When the component mounts, load the next dog to be displayed
@@ -36,19 +36,47 @@ class Saved extends Component {
             })
             .catch(err => console.log(err));
     }
+
     handleInputChange = event => {
         this.context.search = event.target.value;
     };
     handleEventfulDelete = event => {
+        event.preventDefault();
+        let thisYelp = $(this).attr("id");
 
+
+        axios.post({
+            method: "POST",
+            url: "/yelp/delete/" + thisYelp
+        })
+        // With that done
+            .then(function (data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/saved');
+            });
     };
     handleYelpDelete = event => {
+        event.preventDefault();
+        let thisEvent = $(this).attr("id");
+
+
+        axxios.post({
+            method: "POST",
+            url: "/event/delete/" + thisEvent
+        })
+        // With that done
+            .then(function (data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/saved');
+            });
 
     };
     handleFormSubmit = event => {
         event.preventDefault();
         this.props.history.push('/discover');
-        this.setState({ search: this.context.search });
+        this.setState({search: this.context.search});
         console.log("form submitted")
     };
 
@@ -66,12 +94,13 @@ class Saved extends Component {
                                 <h4 className="text-center"> Cool Events:</h4>
 
                                 {eventful.length > 0 && eventful.map((event) =>
-                                    <EventCard
+                                    <EventCardSaved
                                         key={event.id}
                                         title={event.title}
                                         description={event.description}
                                         url={event.url}
                                         date={event.start_time}
+                                        handleEventfulDelete = {this.handleEventfulDelete}
                                     />
                                 )}
                             </Col>
@@ -79,7 +108,7 @@ class Saved extends Component {
                                 <h4 className="text-center"> Where to Eat:</h4>
 
                                 {yelp.length > 0 && yelp.map((data) =>
-                                    <YelpCard
+                                    <YelpCardSaved
                                         key={data.id}
                                         name={data.name}
                                         url={data.url}
@@ -88,6 +117,7 @@ class Saved extends Component {
                                         rating={data.rating}
                                         categories={data.categories}
                                         review_count={data.review_count}
+                                        handleYelpDelete = {this.handleYelpDelete}
                                     />
                                 )}
                             </Col>

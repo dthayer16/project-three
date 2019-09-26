@@ -5,6 +5,7 @@ import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
 import UserContext from "./UserContext";
 import FAButton from "../components/FAB"
+import axios from "axios"
 
 
 class Discover extends Component {
@@ -48,6 +49,35 @@ class Discover extends Component {
         console.log("form submitted")
     };
 
+    handleEventfulSave = event => {
+        event.preventDefault();
+        let thisArticle = $(this).attr("id");
+        axios.post({
+            method: "POST",
+            url: "/event/save/" + thisArticle
+        })
+        // With that done
+            .then(function(data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/discover');
+            });
+    };
+    handleYelpSave = event => {
+        event.preventDefault();
+        let thisArticle = $(this).attr("id");
+        axios.ajax({
+            method: "POST",
+            url: "/yelp/save/" + thisArticle
+        })
+        // With that done
+            .then(function(data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/discover');
+            });
+    };
+
     render() {
         const { eventful, yelp } = this.state;
         return (
@@ -66,6 +96,7 @@ class Discover extends Component {
                                         description={event.description}
                                         url={event.url}
                                         date={event.start_time}
+                                        handleEventfulSave={ this.handleEventfulSave }
                                     />
                                 ) : <h1> No Events </h1>}
                             </Col>
@@ -81,6 +112,7 @@ class Discover extends Component {
                                         image_url={data.image_url}
                                         rating={data.rating}
                                         review_count={data.review_count}
+                                        handleYelpSave={ this.handleYelpSave }
                                     />
                                 )}
                             </Col>
