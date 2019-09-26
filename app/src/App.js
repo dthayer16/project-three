@@ -15,10 +15,10 @@ import { UserProvider } from "./pages/UserContext";
 
 class App extends Component {
 
-    state = {
-        search: "Phoenix"
-
+  state = {
+    search: "Phoenix",
   };
+  
   constructor(e) {
     super();
     const loggedIn = !!window.localStorage.getItem("token");
@@ -71,7 +71,7 @@ class App extends Component {
       <Router>
         <UserProvider value={this.state}>
           <div>
-            <Navvy email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn}/>
+            <Navvy email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
             <Wrapper>
               <Route exact path="/" component={Search} />
               <Route exact path="/search" component={Search} />
