@@ -10,7 +10,6 @@ import Signup from "./pages/SignUpForm"
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Navvy from "./components/Navbar"
-import axios from "axios";
 import { UserProvider } from "./pages/UserContext";
 
 class App extends Component {
@@ -26,31 +25,8 @@ class App extends Component {
       token: "",
       email: null
     };
-
     this.state = state;
-    // this.getUser = this.getUser.bind(this);
   }
-
-  // getUser() {
-
-  //   axios.get("/v1/user/info").then(response => {
-  //     console.log("Get user response: ");
-  //     console.log(response.data);
-  //     if (response.data.user) {
-  //       console.log("Get User: There is a user saved in the server session: ");
-  //       this.setState({
-  //         loggedIn: true,
-  //         email: response.data.user.username
-  //       });
-  //     } else {
-  //       console.log("Get user: no user");
-  //       this.setState({
-  //         loggedIn: false,
-  //         email: null
-  //       });
-  //     }
-  //   });
-  // }
 
   componentDidMount() {
     window.addEventListener("beforeunload", () => {

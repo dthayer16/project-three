@@ -8,7 +8,6 @@ import {
     Label,
     Input
 } from 'reactstrap'
-// import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 class LoginForm extends Component {
@@ -20,9 +19,6 @@ class LoginForm extends Component {
             redirectTo: null
 
         }
-        // this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleChange = this.handleChange.bind(this)
-
     }
 
 
@@ -74,7 +70,7 @@ class LoginForm extends Component {
             <Form inline>
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Label for="exampleEmail" className="mr-sm-2">Email</Label>
-                    <Input type="email" name="email" value={this.state.email} onChange={this.handleChange} id="exampleEmail" placeholder="something@idk.cool" />
+                    <Input type="email" name="email" value={this.state.email} onChange={this.handleChange} id="exampleEmail" placeholder="youremail@here.com" />
                 </FormGroup>
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Label for="examplePassword" className="mr-sm-2">Password</Label>

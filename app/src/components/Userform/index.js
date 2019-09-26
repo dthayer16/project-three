@@ -74,7 +74,7 @@ class userform extends React.Component {
             name="email"
             value={this.state.email}
             onChange={this.handleChange}
-            id="exampleEmail" placeholder="something@idk.cool" />
+            id="exampleEmail" placeholder="youremail@here.com" />
         </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label
@@ -86,13 +86,7 @@ class userform extends React.Component {
             onChange={this.handleChange} id="examplePassword"
             placeholder="Password" />
         </FormGroup>
-        <Button
-          //  className="btn btn-primary col-1 col-mr-auto"
-          // href="/home"                 
-          onClick={this.handleSubmit}
-          type="submit" >Submit</Button>
-
-
+        <Button onClick={this.handleSubmit} type="submit" >Submit</Button>
         <p style={{ marginTop: "20px" }}>Already a User? <a href="/login">Login!</a></p>
       </Form>
     );
