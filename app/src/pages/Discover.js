@@ -14,7 +14,7 @@ class Discover extends Component {
     state = {
         search: this.context.search,
         eventful: [],
-        yelp: []
+        yelp: [],
     };
 
     // When the component mounts, load the next dog to be displayed

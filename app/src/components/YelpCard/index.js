@@ -45,7 +45,7 @@ function YelpCard(props) {
       <Card>
           <Card.Header>
               <Card.Title>
-                  <a href={props.url}><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="" id="yelpBurst"/></a>{props.name}
+                  <a href={props.url} target="blank"><img src="./yelp/yelpBurst/Yelp_burst_positive_RGB.png" alt="" id="yelpBurst"/></a>{props.name}
               </Card.Title>
           </Card.Header>
           <Card.Body>
