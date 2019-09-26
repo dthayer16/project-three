@@ -39,7 +39,12 @@ class Saved extends Component {
     handleInputChange = event => {
         this.context.search = event.target.value;
     };
+    handleEventfulDelete = event => {
 
+    };
+    handleYelpDelete = event => {
+
+    };
     handleFormSubmit = event => {
         event.preventDefault();
         this.props.history.push('/discover');
