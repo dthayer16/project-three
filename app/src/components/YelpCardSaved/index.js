@@ -58,10 +58,10 @@ function YelpCardSaved(props) {
               <Card.Text>
                   <img src={props.image_url} alt="" style={{maxWidth: "340px", maxHeight: "123px"}}/>
               </Card.Text>
-              <Button variant="danger"
-                      onClick={() => props.handleYelpDelete({...props})}>
-                  Delete Food
-              </Button>
+              {/*<Button variant="danger"*/}
+              {/*        onClick={() => props.handleYelpDelete({...props})}>*/}
+              {/*    Delete Food*/}
+              {/*</Button>*/}
           </Card.Body>
       </Card>
     );

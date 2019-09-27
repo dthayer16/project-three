@@ -15,7 +15,7 @@ class Saved extends Component {
     state = {
         search: this.context.search,
         eventful: [],
-        yelp: []
+        yelp: [],
     };
 
     // When the component mounts, load the next dog to be displayed
@@ -59,7 +59,7 @@ class Saved extends Component {
         axios({
             method: "delete",
             url: "v1/saved/yelp/" + id,
-            header: {Authorization: token},
+            headers: {Authorization: token},
         }).then (res => console.log(res))
             .catch(err => console.log(err))
     };
@@ -84,8 +84,9 @@ class Saved extends Component {
 
                                 {eventful.length > 0 && eventful.map((event) =>
                                     <EventCardSaved
-                                        key={event._id}
                                         title={event.title}
+                                        key={event._id}
+                                        id={event._id}
                                         description={event.description}
                                         url={event.url}
                                         date={event.date}
