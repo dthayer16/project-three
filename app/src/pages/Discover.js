@@ -63,10 +63,9 @@ class Discover extends Component {
             data: {
                 eventId: event.key,
                 title: event.title,
-                url: event.url,
                 description: event.description,
-                rating: event.rating,
-                review_count: event.review_count
+                url: event.url,
+                date: event.date
             }
         }).then (res => console.log(res))
             .catch(err =>console.log(err))
@@ -88,7 +87,7 @@ class Discover extends Component {
                 price: yelp.price,
                 rating: yelp.rating,
                 image_url: yelp.image_url,
-                date: yelp.start_date
+                review_count: yelp.review_count,
             }
         }).then (res => console.log(res))
             .catch(err =>console.log(err))
