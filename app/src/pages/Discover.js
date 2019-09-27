@@ -5,7 +5,6 @@ import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
 import UserContext from "./UserContext";
 import FAButton from "../components/FAB"
-import axios from "axios"
 
 
 class Discover extends Component {
@@ -30,6 +29,7 @@ class Discover extends Component {
 
             })
             .catch(err => console.log(err));
+
         API.getYelp(context.search)
             .then(res => {
                 // console.log(res.data.businesses);
@@ -38,6 +38,7 @@ class Discover extends Component {
             })
             .catch(err => console.log(err));
     }
+
     handleInputChange = event => {
         this.context.search = event.target.value;
     };
@@ -49,33 +50,23 @@ class Discover extends Component {
         console.log("form submitted")
     };
 
+    //Save methods
     handleEventfulSave = event => {
-        event.preventDefault();
-        let thisArticle = $(this).attr("id");
-        axios.post({
-            method: "POST",
-            url: "/event/save/" + thisArticle
-        })
-        // With that done
-            .then(function(data) {
-                // Log the response
-                console.log(data);
-                this.props.history.push('/discover');
-            });
+
     };
-    handleYelpSave = event => {
-        event.preventDefault();
-        let thisArticle = $(this).attr("id");
-        axios.ajax({
-            method: "POST",
-            url: "/yelp/save/" + thisArticle
+
+    handleYelpSave = _id => {
+        console.log("Event Submitted");
+
+        API.saveYelp({
+            _id: this.key,
+            name: this.name,
+            url: this.url,
+            price: this.price,
+            rating: this.rating,
+            review_count: this.review_count
         })
-        // With that done
-            .then(function(data) {
-                // Log the response
-                console.log(data);
-                this.props.history.push('/discover');
-            });
+            .catch(err=>console.log(err))
     };
 
     render() {
@@ -112,7 +103,7 @@ class Discover extends Component {
                                         image_url={data.image_url}
                                         rating={data.rating}
                                         review_count={data.review_count}
-                                        handleYelpSave={ this.handleYelpSave }
+                                        handleYelpSave={ this.handleYelpSave({_id: data.id}) }
                                     />
                                 )}
                             </Col>
