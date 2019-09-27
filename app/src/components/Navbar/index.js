@@ -69,8 +69,14 @@ class Navvy extends React.Component {
             </NavDropdown>
           </Nav>
           <Form inline>
-            <FormControl style={{ width: "21rem" }} type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light"><i className="fas fa-search"> </i></Button>
+            <FormControl
+              style={{ width: "21rem" }}
+              onChange={this.handleInputChange}
+              name="search"
+              type="text"
+              placeholder="San Diego, CA"
+              className="mr-sm-2" />
+            <Button variant="outline-light" onClick={this.handleFormSubmit}><i className="fas fa-search"> </i></Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
