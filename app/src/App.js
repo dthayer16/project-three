@@ -38,13 +38,24 @@ class App extends Component {
     this.setState(userObject);
   };
 
+  handleInputChange = event => {
+    this.context.search = event.target.value;
+    console.log(this.context)
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.setState({ search: this.context.search });
+    console.log("form submitted")
+  };
+
   render() {
 
     return (
       <Router>
         <UserProvider value={this.state}>
           <div>
-            <Navvy email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
+            <Navvy handleFormSubmit = {this.handleFormSubmit} handleInputChange = {this.handleInputChange} email={this.state.email} updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
             {/* <Navvy email={localStorage.getItem("email")} updateUser={this.updateUser} loggedIn={this.state.loggedIn} /> */}
             <Wrapper>
               <Route exact path="/" component={Search} />
