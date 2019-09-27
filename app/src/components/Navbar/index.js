@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { Navbar, Button, FormControl, Form, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import axios from "axios";
 
 class Navvy extends React.Component {
@@ -69,16 +69,6 @@ class Navvy extends React.Component {
               )}
             </NavDropdown>
           </Nav>
-          <Form inline>
-            <FormControl
-              style={{ width: "21rem" }}
-              onChange={this.handleInputChange}
-              name="search"
-              type="text"
-              placeholder="San Diego, CA"
-              className="mr-sm-2" />
-            <Button variant="outline-light" onClick={this.handleFormSubmit}><i className="fas fa-search"> </i></Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
 
