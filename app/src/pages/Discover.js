@@ -5,6 +5,7 @@ import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
 import UserContext from "./UserContext";
 import FAButton from "../components/FAB"
+import axios from "axios"
 
 
 class Discover extends Component {
@@ -14,7 +15,7 @@ class Discover extends Component {
     state = {
         search: this.context.search,
         eventful: [],
-        yelp: []
+        yelp: [],
     };
 
     // When the component mounts, load the next dog to be displayed
@@ -24,14 +25,14 @@ class Discover extends Component {
 
         API.getEvents(context.search)
             .then(res => {
-                console.log(res.data.event);
+                // console.log(res.data.event);
                 this.setState({eventful: res.data.event})
 
             })
             .catch(err => console.log(err));
         API.getYelp(context.search)
             .then(res => {
-                console.log(res.data.businesses);
+                // console.log(res.data.businesses);
                 this.setState({yelp: res.data.businesses})
 
             })
@@ -48,6 +49,35 @@ class Discover extends Component {
         console.log("form submitted")
     };
 
+    handleEventfulSave = event => {
+        event.preventDefault();
+        let thisArticle = $(this).attr("id");
+        axios.post({
+            method: "POST",
+            url: "/event/save/" + thisArticle
+        })
+        // With that done
+            .then(function(data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/discover');
+            });
+    };
+    handleYelpSave = event => {
+        event.preventDefault();
+        let thisArticle = $(this).attr("id");
+        axios.ajax({
+            method: "POST",
+            url: "/yelp/save/" + thisArticle
+        })
+        // With that done
+            .then(function(data) {
+                // Log the response
+                console.log(data);
+                this.props.history.push('/discover');
+            });
+    };
+
     render() {
         const { eventful, yelp } = this.state;
         return (
@@ -59,17 +89,16 @@ class Discover extends Component {
                             <Col>
                                 <h4 className="text-center"> Cool Events:</h4>
 
-                                {eventful.length > 0 && eventful.map((event) =>
+                                {eventful ? eventful.map((event) =>
                                     <EventCard
-                                    key={event.id}
-                                    title={event.title}
-                                    description={event.description}
-                                    url={event.url}
-                                    date={event.start_time}
+                                        key={event.id}
+                                        title={event.title}
+                                        description={event.description}
+                                        url={event.url}
+                                        date={event.start_time}
+                                        handleEventfulSave={ this.handleEventfulSave }
                                     />
-
-
-                                )}
+                                ) : <h1> No Events </h1>}
                             </Col>
                             <Col>
                                 <h4 className="text-center"> Where to Eat:</h4>
@@ -82,8 +111,8 @@ class Discover extends Component {
                                         price={data.price}
                                         image_url={data.image_url}
                                         rating={data.rating}
-                                        categories={data.categories}
                                         review_count={data.review_count}
+                                        handleYelpSave={ this.handleYelpSave }
                                     />
                                 )}
                             </Col>
