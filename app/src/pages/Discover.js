@@ -7,7 +7,6 @@ import UserContext from "./UserContext";
 import FAButton from "../components/FAB";
 import axios from "axios";
 
-const token = localStorage.getItem("token");
 class Discover extends Component {
     static contextType = UserContext;
 

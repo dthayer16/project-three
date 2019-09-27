@@ -8,11 +8,12 @@ export default {
     },
 
     getYelp: function (query) {
-        return axios.get("/v1/yelp/"  + query);
+        return axios.get("/v1/yelp/" + query);
     },
 
-    getFlight: function (query) {
+    getFlight: function () {
         return axios.get("/v1/flight");
+
     },
 
     getHotel: function (query) {
