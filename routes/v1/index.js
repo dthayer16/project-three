@@ -9,6 +9,7 @@ const { requireAuth, requireSignin } = require("../auth");
 const axios = require("axios");
 const yelp = require('yelp-fusion');
 const request = require("request");
+const savedController = require("../../controllers/savedController");
 
 function tokenizer(user) {
     return jwt.sign(
@@ -128,5 +129,140 @@ router.post("/signup", function (req, res) {
             return next(err);
         });
 });
+
+// Save/Delete Functionality
+//================================================================================================================
+router.get("/saved", function(req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.User.find({})
+    // ..and populate all of the notes associated with it
+        .populate("SavedYelp", "SavedEventful")
+        .then(function(dbUser) {
+            // If we were able to successfully find an Article with the given id, send it back to the client
+            res.json(dbUser);
+        })
+        .catch(function(err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
+router.post("/saved/yelp", requireAuth, function(req, res){
+    db.SavedYelp.create(req.body)
+        .then(function(dbYelp){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedYelp: dbYelp._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+router.post("/saved/event", requireAuth, function(req, res){
+    db.SavedEventful.create(req.body)
+        .then(function(dbEventful){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedEventful: dbEventful._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+// router.route("/")
+//     .get(savedController.findSavedEvent, savedController.findSavedYelp)
+//     .post(savedController.saveEvent, savedController.saveYelp);
+// router.route("/:id")
+//     .get(savedController.findEventById, savedController.findYelpById)
+//     .delete(savedController.removeEvent, savedController.removeYelp);
+
+
+//================================================================================================================
+// Route for grabbing a specific User by id, populate it with it's notedb
+// router.get("/saved", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.User.find({})
+//     // ..and populate all of the notes associated with it
+//         .populate("SavedYelp", "SavedEventful")
+//         .then(function(dbUser) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbUser);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+// //Delete Event Method
+// router.post("/event/delete/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOneAndDelete({ _id: req.params.id })
+//         .update({ saved: false })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+//
+// //Delete Yelp Method
+// router.post("/yelp/delete/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOneAndDelete({ _id: req.params.id })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+//
+// //Route for getting saved Articles from the db
+// router.get("/saved", function(req, res){
+//     db.Article.find({"saved": true}, function(error, data) {
+//         let savedData = {
+//             article: data
+//         };
+//         console.log(savedData);
+//         res.render("saved", savedData);
+//     });
+// });
+//
+//
+//
+// //Save single Yelp
+// router.post("/yelp/save/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOne({ _id: req.params.id })
+//         .update({ saved: true })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+// //Save single Event
+// router.post("/event/save/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOne({ _id: req.params.id })
+//         .update({ saved: true })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+
 
 module.exports = router;
