@@ -41,7 +41,7 @@ class About extends Component {
       />)
     }
     return flights;
-  }
+  };
   // handleInputChange = event => {
   //   this.context.search = event.target.value;
   // };
