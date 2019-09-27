@@ -169,6 +169,30 @@ router.post("/saved/event", requireAuth, function(req, res){
         })
         .catch(err=>console.log(err))
 });
+
+router.get("/saved/yelp", requireAuth, function(req, res){
+    db.SavedYelp.find()
+        .then(function(dbUser) {
+           return res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+router.get("/saved/event", requireAuth, function(req, res){
+    db.SavedEventful.find()
+        .then(function(dbUser) {
+           return res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+
+router.post("/saved/event/:id", requireAuth, function(req, res){
+    db.SavedEventful.findOneAndDelete({_id: req.params.id})
+        .then(function(dbEventful){
+            return res.json(dbEventful)
+        })
+
+        .catch(err=>console.log(err))
+});
 // router.route("/")
 //     .get(savedController.findSavedEvent, savedController.findSavedYelp)
 //     .post(savedController.saveEvent, savedController.saveYelp);

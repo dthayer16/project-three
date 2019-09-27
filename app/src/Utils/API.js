@@ -23,10 +23,10 @@ export default {
 
     //Save/Delete
     getSavedEvent: function(){
-        return axios.get("/v1/saved/event");
+        return axios.get("/v1/saved/event", {headers: {"Authorization" : token}});
     },
     getSavedYelp: function(){
-        return axios.get("/v1/saved/yelp");
+        return axios.get("/v1/saved/yelp", {headers: {"Authorization" : token}});
     },
     saveYelp: function(yelpData){
         return axios.post("/v1/saved/yelp", {headers: {"Authorization" : token}}, yelpData)
@@ -35,9 +35,9 @@ export default {
         return axios.post("/v1/saved/event", {headers: {"Authorization" : token}}, eventData)
     },
     deleteYelp: function(id){
-        return axios.delete("/v1/saved/yelp/" + id)
+        return axios.delete("/v1/saved/yelp/" + id,  {headers: {"Authorization" : token}})
     },
     deleteEvent: function(id){
-        return axios.delete("/v1/saved/event/" + id)
+        return axios.delete("/v1/saved/event/" + id, {headers: {"Authorization" : token}})
     }
 };

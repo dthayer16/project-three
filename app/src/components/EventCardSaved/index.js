@@ -41,7 +41,7 @@ function EventCardSaved(props) {
                     {description}
                 </Card.Text>
                 <Button variant="danger"
-                        onClick={props.handleEventfulDelete}>
+                        onClick={() => props.handleEventfulDelete({props})}>
                     Delete Food
                 </Button>
             </Card.Body>
