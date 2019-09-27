@@ -2,6 +2,7 @@ require("dotenv").config();
 
 var express = require("express");
 var mongoose = require("mongoose");
+const path = require("path");
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -29,6 +30,10 @@ db(process.env.MONGODB_URI || "mongodb://localhost/test");
 
 // Routes
 app.use(require("./routes"));
+
+app.get("*", function(req, res){
+    res.sendFile(path.resolve(__dirname, "app", "build", "index.html"));
+})
 
 // Start the server
 app.listen(PORT, function () {
