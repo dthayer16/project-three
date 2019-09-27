@@ -9,6 +9,7 @@ const { requireAuth, requireSignin } = require("../auth");
 const axios = require("axios");
 const yelp = require('yelp-fusion');
 const request = require("request");
+const savedController = require("../../controllers/savedController");
 
 function tokenizer(user) {
     return jwt.sign(
@@ -29,16 +30,12 @@ router.get("/events/:city", function (req, res) {
 
     axios.get(url)
         .then(response => {
-            console.log(response.data.events);
             res.status(200).send(response.data.events);
         })
         .catch(err => {
             res.status(422).json(err);
         });
 });
-
-// Place holder for Yelp Fusion's API Key. Grab them
-// from https://www.yelp.com/developers/v3/manage_app
 
 router.get("/yelp/:city", function (req, res) {
 
@@ -53,12 +50,7 @@ router.get("/yelp/:city", function (req, res) {
 
     client.search(searchRequest)
         .then(response => {
-
-            // const firstResult = response.jsonBody;
-
-            console.log(response.jsonBody);
             res.status(200).json(response.jsonBody)
-
         }).catch(err => {
             res.status(422).json(err);
         });
@@ -67,13 +59,6 @@ router.get("/yelp/:city", function (req, res) {
 router.get("/flight", function (req, res) {
 
     const kajakKey = process.env.kajakKey;
-    // const originOne = "SGN";
-    // const destinationOne = "DAD";
-    // const departDateOne = "2018-12-20";
-    // const cabin = "e";
-    // const currency = "USD";
-    // const adults = "1";
-    // const bags = "0";
 
     var options = {
         method: 'GET',
@@ -93,64 +78,13 @@ router.get("/flight", function (req, res) {
             "x-rapidapi-key": kajakKey
         }
 
-    }
-    // const url = `https://apidojo-kayak-v1.p.rapidapi.com/flights/create-session?&origin1=${originOne}&destination1=${destinationOne}&departdate1=${departDateOne}&cabin=${cabin}&currency=${currency}&adults=${adults}&bags=${bags}`;
-
-    // const settings = {
-    //     "async": true,
-    //     "crossDomain": true,
-    //     "url": url,
-    //     "method": "GET",
-    //     "headers": {
-    //         "x-rapidapi-host": "apidojo-kayak-v1.p.rapidapi.com",
-    //         "x-rapidapi-key": kajakKey
-    //     }
-    // }
-
-    // axios.get(settings)
-    //     .then(response => {
-    //         console.log(response)
-    //         res.status(200).send(response);
-    //     })
-    //     .catch(err => {
-    //         res.status(422).json(err);
-    //     });
+    };
 
     request(options, function (err, response, body) {
         if (err) throw new Error(err);
-        console.log(body)
-        // res.json(body);
+        // console.log(body)
+        res.json(body);
     })
-});
-
-router.get("/hotel", function (req, res) {
-
-    const kajakKey = process.env.kajakKey;
-    const rooms = "";
-    const cityCode = "";
-    const checkIn = "";
-    const checkOut = "";
-    const adults = "";
-    const url = `https://apidojo-kayak-v1.p.rapidapi.com/hotels/create-session?airportcode=HAN&rooms=${rooms}&citycode=${cityCode}&checkin=${checkIn}&checkout=${checkOut}&adults=${adults}`
-
-    const settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": url,
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "apidojo-kayak-v1.p.rapidapi.com",
-            "x-rapidapi-key": kajakKey
-        }
-    }
-
-    axios.get(settings)
-        .then(response => {
-            res.status(200).send(response);
-        })
-        .catch(err => {
-            res.status(422).json(err);
-        });
 });
 
 router.post("/signin", requireSignin, function (req, res) {
@@ -195,5 +129,140 @@ router.post("/signup", function (req, res) {
             return next(err);
         });
 });
+
+// Save/Delete Functionality
+//================================================================================================================
+router.get("/saved", function(req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.User.find({})
+    // ..and populate all of the notes associated with it
+        .populate("SavedYelp", "SavedEventful")
+        .then(function(dbUser) {
+            // If we were able to successfully find an Article with the given id, send it back to the client
+            res.json(dbUser);
+        })
+        .catch(function(err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
+router.post("/saved/yelp", requireAuth, function(req, res){
+    db.SavedYelp.create(req.body)
+        .then(function(dbYelp){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedYelp: dbYelp._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+router.post("/saved/event", requireAuth, function(req, res){
+    db.SavedEventful.create(req.body)
+        .then(function(dbEventful){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedEventful: dbEventful._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+// router.route("/")
+//     .get(savedController.findSavedEvent, savedController.findSavedYelp)
+//     .post(savedController.saveEvent, savedController.saveYelp);
+// router.route("/:id")
+//     .get(savedController.findEventById, savedController.findYelpById)
+//     .delete(savedController.removeEvent, savedController.removeYelp);
+
+
+//================================================================================================================
+// Route for grabbing a specific User by id, populate it with it's notedb
+// router.get("/saved", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.User.find({})
+//     // ..and populate all of the notes associated with it
+//         .populate("SavedYelp", "SavedEventful")
+//         .then(function(dbUser) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbUser);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+// //Delete Event Method
+// router.post("/event/delete/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOneAndDelete({ _id: req.params.id })
+//         .update({ saved: false })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+//
+// //Delete Yelp Method
+// router.post("/yelp/delete/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOneAndDelete({ _id: req.params.id })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+//
+// //Route for getting saved Articles from the db
+// router.get("/saved", function(req, res){
+//     db.Article.find({"saved": true}, function(error, data) {
+//         let savedData = {
+//             article: data
+//         };
+//         console.log(savedData);
+//         res.render("saved", savedData);
+//     });
+// });
+//
+//
+//
+// //Save single Yelp
+// router.post("/yelp/save/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOne({ _id: req.params.id })
+//         .update({ saved: true })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+// //Save single Event
+// router.post("/event/save/:id", function(req, res) {
+//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+//     db.Article.findOne({ _id: req.params.id })
+//         .update({ saved: true })
+//         .then(function(dbArticle) {
+//             // If we were able to successfully find an Article with the given id, send it back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function(err) {
+//             // If an error occurred, send it to the client
+//             res.json(err);
+//         });
+// });
+
 
 module.exports = router;

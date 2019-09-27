@@ -7,19 +7,15 @@ function SearchForm(props) {
     return (
         <form className="search">
             <div className="form-group">
-                <InputGroup size="md">
-                    <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                                 value={props.search}
+                <InputGroup size="lg">
+                    <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-lg"
                                  onChange={props.handleInputChange}
                                  name="search"
                                  type="text"
                                  className="form-control"
                                  placeholder="San Diego, CA"
-                                 id="breed"
                     />
-                    <InputGroup.Append>
-                        <Button variant="outline-info" onClick={props.handleFormSubmit}><i className="fas fa-search"> </i></Button>
-                    </InputGroup.Append>
+                        <Button type="submit" variant="outline-info" onClick={props.handleFormSubmit} style={{display: "inline"}}><i className="fas fa-search"> </i></Button>
                 </InputGroup>
 
             </div>

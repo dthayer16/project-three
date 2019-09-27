@@ -10,11 +10,12 @@ const path = require("path");
 
 var PORT = process.env.PORT || 8080;
 
-require("./services/passport.js")
+require("./services/passport.js");
 // Initialize Express
 var app = express();
 
-// Configure middleware 
+//Models
+var $ = require("./models");
 
 // Parse request body as JSON
 app.use(express.json());

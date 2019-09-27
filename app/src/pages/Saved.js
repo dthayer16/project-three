@@ -1,76 +1,104 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+import EventCardSaved from "../components/EventCardSaved";
+import YelpCardSaved from "../components/YelpCardSaved";
+import {Jumbotron, Container, Col, Row} from "react-bootstrap";
 import API from "../Utils/API";
-import YelpCard from "../components/YelpCard";
-import EventCard from "../components/EventCard";
-import {Jumbotron, Container, Col, Row, Button} from "react-bootstrap";
-import Navvy from "../components/Navbar";
+import FAButton from "../components/FAB";
+import UserContext from "./UserContext";
 
 
 class Saved extends Component {
+    static contextType = UserContext;
+
+
     state = {
-        search: ""
+        search: this.context.search,
+        eventful: [],
+        yelp: []
     };
 
     // When the component mounts, load the next dog to be displayed
     componentDidMount() {
+        this.loadEventData();
+        this.loadYelpData();
     }
 
-    handleBtnClick = event => {
-        // Get the data-value of the clicked button
-        const btnType = event.target.attributes.getNamedItem("data-value").value;
-        // Clone this.state to the newState object
-        // We'll modify this object and use it to set our component's state
-        const newState = { ...this.state };
-
-        if (btnType === "pick") {
-            // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-            newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-
-            // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-            newState.matchCount = newState.match
-                ? newState.matchCount + 1
-                : newState.matchCount;
-        } else {
-            // If we thumbs down'ed the dog, we haven't matched with it
-            newState.match = false;
-        }
-        // Replace our component's state with newState, load the next dog image
-        this.setState(newState);
-        this.loadNextDog();
-    };
-
-    loadNextDog = () => {
-        API.getRandomDog()
+    loadEventData = () => {
+        API.getSavedEvent()
             .then(res =>
-                this.setState({
-                    image: res.data.message
-                })
+            this.setState({eventful: res.data})
+            )
+            .catch(err => console.log(err));
+    };
+    loadYelpData = () => {
+        API.getSavedYelp()
+            .then(res =>
+            this.setState({yelp: res.data})
             )
             .catch(err => console.log(err));
     };
 
+    handleInputChange = event => {
+        this.context.search = event.target.value;
+    };
+
+
+    handleEventfulDelete = id => {
+        API.deleteEvent(id)
+            .then(res => this.loadEventData())
+            .catch(err => console.log(err))
+    };
+
+    handleYelpDelete = id => {
+        API.deleteYelp(id)
+            .then(res => this.loadYelpData())
+            .catch(err => console.log(err))
+    };
+
     render() {
+        const {eventful, yelp} = this.state;
         return (
             <div>
-                <Navvy/>
+
                 <br/>
                 <Container>
-                    <h5 className="">Saved Results </h5>
+                    <h3 className="">Saved Results</h3>
                     <Jumbotron>
                         <Row>
                             <Col>
-                                <h6 className="text-center"> Events</h6>
-                                <EventCard/>
+                                <h4 className="text-center"> Cool Events:</h4>
+
+                                {eventful ? eventful.map((event) =>
+                                    <EventCardSaved
+                                        key={event._id}
+                                        title={event.title}
+                                        description={event.description}
+                                        url={event.url}
+                                        date={event.start_time}
+                                        handleEventfulDelete={ this.handleEventfulDelete(event._id) }
+                                    />
+                                ) : <h1> No Events </h1>}
                             </Col>
                             <Col>
-                                <h6 className="text-center"> Food</h6>
-                                <YelpCard/>
+                                <h4 className="text-center"> Where to Eat:</h4>
+
+                                {yelp ? yelp.map((data) =>
+                                    <YelpCardSaved
+                                        key={data._id}
+                                        name={data.name}
+                                        url={data.url}
+                                        price={data.price}
+                                        image_url={data.image_url}
+                                        rating={data.rating}
+                                        categories={data.categories}
+                                        review_count={data.review_count}
+                                        handleYelpDelete = { this.handleYelpDelete(data._id) }
+                                    />
+                                ): <h1>No Eats</h1>}
                             </Col>
                         </Row>
                     </Jumbotron>
-                    <Button variant="info" size="lg">
-                        Let's Go!
-                    </Button>
+                    <FAButton/>
                 </Container>
             </div>
         );

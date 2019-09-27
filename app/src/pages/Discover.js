@@ -1,92 +1,121 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import YelpCard from "../components/YelpCard";
 import EventCard from "../components/EventCard";
-import {Jumbotron, Container, Col, Row, Button} from "react-bootstrap";
-import Navvy from "../components/Navbar";
+import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
-
+import UserContext from "./UserContext";
+import FAButton from "../components/FAB";
+import axios from "axios";
 
 class Discover extends Component {
+    static contextType = UserContext;
+
+
     state = {
-        search: "phoenix",
+        search: this.context.search,
         eventful: [],
-        yelp: []
+        yelp: [],
     };
 
     // When the component mounts, load the next dog to be displayed
     componentDidMount() {
-        var city = this.state.search;
-   
-        API.getEvents(city)
+        // var city = this.state.search;
+        const context = this.context;
+
+        API.getEvents(context.search)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data.event);
                 this.setState({eventful: res.data.event})
+
             })
             .catch(err => console.log(err));
-        API.getYelp(city)
+
+        API.getYelp(context.search)
             .then(res => {
-                console.log(res.data.businesses);
+                // console.log(res.data.businesses);
                 this.setState({yelp: res.data.businesses})
+
             })
             .catch(err => console.log(err));
     }
 
-    handleBtnClick = event => {
-        // Get the data-value of the clicked button
-        const btnType = event.target.attributes.getNamedItem("data-value").value;
-        // Clone this.state to the newState object
-        // We'll modify this object and use it to set our component's state
-        const newState = {...this.state};
-
-        if (btnType === "pick") {
-            // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-            newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-
-            // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-            newState.matchCount = newState.match
-                ? newState.matchCount + 1
-                : newState.matchCount;
-        } else {
-            // If we thumbs down'ed the dog, we haven't matched with it
-            newState.match = false;
-        }
-        // Replace our component's state with newState, load the next dog image
-        this.setState(newState);
-        this.loadNextDog();
+    handleInputChange = event => {
+        this.context.search = event.target.value;
     };
 
-    loadNextDog = () => {
-        API.getRandomDog()
-            .then(res =>
-                this.setState({
-                    image: res.data.message
-                })
-            )
-            .catch(err => console.log(err));
+    handleFormSubmit = event => {
+        event.preventDefault();
+        this.props.history.push('/discover');
+        this.setState({ search: this.context.search });
+        console.log("form submitted")
+    };
+
+    //Save methods
+    handleEventfulSave = event => {
+        console.log("Yelp Submitted");
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        console.log(token);
+
+        axios({
+            method: "post",
+            url: "v1/saved/event",
+            headers: {Authorization: token},
+            data: {
+                eventId: event.key,
+                title: event.title,
+                url: event.url,
+                description: event.description,
+                rating: event.rating,
+                review_count: event.review_count
+            }
+        }).then (res => console.log(res))
+            .catch(err =>console.log(err))
+    };
+
+    handleYelpSave = yelp=> {
+        console.log("Yelp Submitted");
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        console.log(token);
+
+        axios({
+            method: "post",
+            url: "v1/saved/yelp",
+            headers: {Authorization: token},
+            data: {
+                yelpId: yelp.key,
+                name: yelp.name,
+                url: yelp.url,
+                price: yelp.price,
+                rating: yelp.rating,
+                image_url: yelp.image_url,
+                date: yelp.start_date
+            }
+        }).then (res => console.log(res))
+            .catch(err =>console.log(err))
+
     };
 
     render() {
-        const {eventful, yelp} = this.state;
+        const { eventful, yelp } = this.state;
         return (
             <div>
-                <Navvy/>
-                <br/>
                 <Container>
-                    <h3 className="">Results for {this.state.search}</h3>
+                    <h3 className="">Results for {this.context.search}</h3>
                     <Jumbotron>
                         <Row>
                             <Col>
-                                <h4 className="text-center"> Events Happening:</h4>
+                                <h4 className="text-center"> Cool Events:</h4>
 
-                                {eventful.length > 0 && eventful.map((event) =>
+                                {eventful ? eventful.map((event) =>
                                     <EventCard
                                         key={event.id}
                                         title={event.title}
                                         description={event.description}
                                         url={event.url}
                                         date={event.start_time}
+                                        handleEventfulSave={ this.handleEventfulSave }
                                     />
-                                )}
+                                ) : <h1> No Events </h1>}
                             </Col>
                             <Col>
                                 <h4 className="text-center"> Where to Eat:</h4>
@@ -99,16 +128,14 @@ class Discover extends Component {
                                         price={data.price}
                                         image_url={data.image_url}
                                         rating={data.rating}
-                                        categories={data.categories}
                                         review_count={data.review_count}
+                                        handleYelpSave={ this.handleYelpSave }
                                     />
                                 )}
                             </Col>
                         </Row>
                     </Jumbotron>
-                    <Button variant="info" size="lg">
-                        Let's Go!
-                    </Button>
+                    <FAButton />
                 </Container>
             </div>
         );
