@@ -40,7 +40,7 @@ function EventCard(props) {
                     <br />
                     {description}
                 </Card.Text>
-                <Button variant="info" onClick={props.handleEventfulSave}>Save Event</Button>
+                <Button variant="info" onClick={() => props.handleEventfulSave({...props})}>Save Event</Button>
             </Card.Body>
         </Card>
     );

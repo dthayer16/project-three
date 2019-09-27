@@ -58,7 +58,7 @@ function YelpCard(props) {
               <Card.Text>
                   <img src={props.image_url} alt="" style={{maxWidth: "340px", maxHeight: "123px"}}/>
               </Card.Text>
-              <Button variant="info" onClick={props.handleYelpSave}>Save Food</Button>
+              <Button variant="info" onClick={() => props.handleYelpSave({...props})}>Save Food</Button>
           </Card.Body>
       </Card>
     );

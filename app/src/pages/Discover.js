@@ -4,9 +4,10 @@ import EventCard from "../components/EventCard";
 import { Jumbotron, Container, Col, Row } from "react-bootstrap";
 import API from "../Utils/API";
 import UserContext from "./UserContext";
-import FAButton from "../components/FAB"
+import FAButton from "../components/FAB";
+import axios from "axios";
 
-
+const token = localStorage.getItem("token");
 class Discover extends Component {
     static contextType = UserContext;
 
@@ -52,21 +53,47 @@ class Discover extends Component {
 
     //Save methods
     handleEventfulSave = event => {
+        console.log("Yelp Submitted");
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        console.log(token);
 
+        axios({
+            method: "post",
+            url: "v1/saved/event",
+            headers: {Authorization: token},
+            data: {
+                eventId: event.key,
+                title: event.title,
+                url: event.url,
+                description: event.description,
+                rating: event.rating,
+                review_count: event.review_count
+            }
+        }).then (res => console.log(res))
+            .catch(err =>console.log(err))
     };
 
-    handleYelpSave = _id => {
-        console.log("Event Submitted");
+    handleYelpSave = yelp=> {
+        console.log("Yelp Submitted");
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        console.log(token);
 
-        API.saveYelp({
-            _id: this.key,
-            name: this.name,
-            url: this.url,
-            price: this.price,
-            rating: this.rating,
-            review_count: this.review_count
-        })
-            .catch(err=>console.log(err))
+        axios({
+            method: "post",
+            url: "v1/saved/yelp",
+            headers: {Authorization: token},
+            data: {
+                yelpId: yelp.key,
+                name: yelp.name,
+                url: yelp.url,
+                price: yelp.price,
+                rating: yelp.rating,
+                image_url: yelp.image_url,
+                date: yelp.start_date
+            }
+        }).then (res => console.log(res))
+            .catch(err =>console.log(err))
+
     };
 
     render() {
@@ -103,7 +130,7 @@ class Discover extends Component {
                                         image_url={data.image_url}
                                         rating={data.rating}
                                         review_count={data.review_count}
-                                        handleYelpSave={ this.handleYelpSave({_id: data.id}) }
+                                        handleYelpSave={ this.handleYelpSave }
                                     />
                                 )}
                             </Col>

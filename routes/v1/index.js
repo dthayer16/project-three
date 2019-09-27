@@ -185,15 +185,34 @@ router.get("/saved", function(req, res) {
         });
 });
 
-router.post("/saved/yelp", function(req, res){
-    db.SavedYelp.create(req.body).then(dbYelp => res.json(dbYelp)).catch(err=>console.log(err))
+router.post("/saved/yelp", requireAuth, function(req, res){
+    db.SavedYelp.create(req.body)
+        .then(function(dbYelp){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedYelp: dbYelp._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
 });
-router.route("/")
-    .get(savedController.findSavedEvent, savedController.findSavedYelp)
-    .post(savedController.saveEvent, savedController.saveYelp);
-router.route("/:id")
-    .get(savedController.findEventById, savedController.findYelpById)
-    .delete(savedController.removeEvent, savedController.removeYelp);
+router.post("/saved/event", requireAuth, function(req, res){
+    db.SavedEventful.create(req.body)
+        .then(function(dbEventful){
+            return db.User.findOneAndUpdate({ email: req.user.email }, { $push: {savedEventful: dbEventful._id}},
+                { new: true });
+        })
+        .then(function(dbUser) {
+            res.json(dbUser);
+        })
+        .catch(err=>console.log(err))
+});
+// router.route("/")
+//     .get(savedController.findSavedEvent, savedController.findSavedYelp)
+//     .post(savedController.saveEvent, savedController.saveYelp);
+// router.route("/:id")
+//     .get(savedController.findEventById, savedController.findYelpById)
+//     .delete(savedController.removeEvent, savedController.removeYelp);
 
 
 //================================================================================================================

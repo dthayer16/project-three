@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 // Using the Schema constructor, create a new UserSchema object
 // This is similar to a Sequelize model
 var SavedEventfulSchema = new Schema({
-    _id: {
+    eventId: {
         type: String
     },
     title: {
