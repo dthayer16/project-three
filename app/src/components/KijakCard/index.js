@@ -14,16 +14,13 @@ function KijakCard(props) {
         <Card>
             <Card.Header>
                 <Card.Title>
-                    <img alt="" src={`kayak.com${props.airlineLogo}`} />{props.airlines}
+                    <img alt="Airline Logo" src={"https://www.kayak.com" + props.airlineLogo} />{props.airlines}
                 </Card.Title>
             </Card.Header>
             <Card.Body>
                 <p>Flight Number:</p><h2>{props.flightNumber}</h2>
-                <br />
                 <p>Departure Date/Time: <br /> {departTime}</p>
-                <br />
                 <p>Arrival Date/Time: <br /> {arrivalTime}</p>
-                <br />
                 <p> Flight Info From: <a href={props.baseUrl} target="blank">{props.baseUrl}</a></p>
             </Card.Body>
         </Card>
