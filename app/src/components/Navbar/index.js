@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { Navbar, Button, FormControl, Form, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import axios from "axios";
 
 class Navvy extends React.Component {
@@ -54,6 +54,7 @@ class Navvy extends React.Component {
               <Link className="dropdown-item" to="/">Home</Link>
               <Link className="dropdown-item" to="/discover">Results</Link>
               <Link className="dropdown-item" to="/about">Form</Link>
+              <Link className="dropdown-item" to="/saved">Saved</Link>
 
               {!this.props.loggedIn && (
                 <Link className="dropdown-item" to="/signup">Signup</Link>
@@ -68,10 +69,6 @@ class Navvy extends React.Component {
               )}
             </NavDropdown>
           </Nav>
-          <Form inline>
-            <FormControl style={{ width: "21rem" }} type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light"><i className="fas fa-search"> </i></Button>
-          </Form>
         </Navbar.Collapse>
       </Navbar>
 

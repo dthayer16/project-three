@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { Button, Card } from "react-bootstrap";
 
-function YelpCard(props) {
+function YelpCardSaved(props) {
     let image;
     switch (props.rating) {
         case 1:
@@ -58,10 +58,13 @@ function YelpCard(props) {
               <Card.Text>
                   <img src={props.image_url} alt="" style={{maxWidth: "340px", maxHeight: "123px"}}/>
               </Card.Text>
-              <Button variant="info" onClick={() => props.handleYelpSave({...props})}>Save Food</Button>
+              {/*<Button variant="danger"*/}
+              {/*        onClick={() => props.handleYelpDelete({...props})}>*/}
+              {/*    Delete Food*/}
+              {/*</Button>*/}
           </Card.Body>
       </Card>
     );
 }
 
-export default YelpCard;
+export default YelpCardSaved;

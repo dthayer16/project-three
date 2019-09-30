@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import YelpCard from "../components/YelpCard";
-import EventCard from "../components/EventCard";
+import EventCardSaved from "../components/EventCardSaved";
+import YelpCardSaved from "../components/YelpCardSaved";
 import {Jumbotron, Container, Col, Row} from "react-bootstrap";
-import Navvy from "../components/Navbar";
 import API from "../Utils/API";
 import FAButton from "../components/FAB";
 import UserContext from "./UserContext";
+import axios from "axios";
 
 
 class Saved extends Component {
@@ -20,43 +20,60 @@ class Saved extends Component {
 
     // When the component mounts, load the next dog to be displayed
     componentDidMount() {
-        // var city = this.state.search;
-        const context = this.context;
-
-        API.getEvents(context.search)
-            .then(res => {
-                // console.log(res.data.event);
-                this.setState({eventful: res.data.event})
-            })
-            .catch(err => console.log(err));
-        API.getYelp(context.search)
-            .then(res => {
-                // console.log(res.data.businesses);
-                this.setState({yelp: res.data.businesses})
-            })
-            .catch(err => console.log(err));
+        this.loadEventData();
+        this.loadYelpData();
+        console.log(this.state.eventful);
+        console.log(this.state.yelp);
     }
+
+    loadEventData = () => {
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        axios({
+            method: "get",
+            url: "v1/saved/event",
+            headers: {Authorization: token},
+        }).then (res => {
+            console.log(res.data);
+            this.setState({eventful: res.data});
+            console.log(this.state);
+        })
+            .catch(err =>console.log(err))
+    };
+    loadYelpData = () => {
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        axios({
+            method: "get",
+            url: "v1/saved/yelp",
+            headers: {Authorization: token},
+        }).then (res => this.setState({yelp: res.data}))
+            .catch(err =>console.log(err))
+    };
+
     handleInputChange = event => {
         this.context.search = event.target.value;
     };
-    handleEventfulDelete = event => {
 
-    };
-    handleYelpDelete = event => {
 
+    handleEventfulDelete = id => {
+        const token = JSON.parse(localStorage.getItem("state")).token;
+        axios({
+            method: "delete",
+            url: "v1/saved/yelp/" + id,
+            headers: {Authorization: token},
+        }).then (res => console.log(res))
+            .catch(err => console.log(err))
     };
-    handleFormSubmit = event => {
-        event.preventDefault();
-        this.props.history.push('/discover');
-        this.setState({ search: this.context.search });
-        console.log("form submitted")
+    handleYelpDelete = id => {
+        API.deleteYelp(id)
+            .then(res => this.loadYelpData())
+            .catch(err => console.log(err))
     };
 
     render() {
         const {eventful, yelp} = this.state;
         return (
             <div>
-                <Navvy/>
+
                 <br/>
                 <Container>
                     <h3 className="">Saved Results</h3>
@@ -66,12 +83,14 @@ class Saved extends Component {
                                 <h4 className="text-center"> Cool Events:</h4>
 
                                 {eventful.length > 0 && eventful.map((event) =>
-                                    <EventCard
-                                        key={event.id}
+                                    <EventCardSaved
                                         title={event.title}
+                                        key={event._id}
+                                        id={event._id}
                                         description={event.description}
                                         url={event.url}
-                                        date={event.start_time}
+                                        date={event.date}
+                                        handleEventfulDelete={ this.handleEventfulDelete }
                                     />
                                 )}
                             </Col>
@@ -79,8 +98,8 @@ class Saved extends Component {
                                 <h4 className="text-center"> Where to Eat:</h4>
 
                                 {yelp.length > 0 && yelp.map((data) =>
-                                    <YelpCard
-                                        key={data.id}
+                                    <YelpCardSaved
+                                        key={data._id}
                                         name={data.name}
                                         url={data.url}
                                         price={data.price}
@@ -88,6 +107,7 @@ class Saved extends Component {
                                         rating={data.rating}
                                         categories={data.categories}
                                         review_count={data.review_count}
+                                        handleYelpDelete = { this.handleYelpDelete }
                                     />
                                 )}
                             </Col>

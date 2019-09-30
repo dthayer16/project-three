@@ -3,7 +3,7 @@ import "./style.css";
 import { Card, Button } from "react-bootstrap";
 import moment from "moment";
 
-function EventCard(props) {
+function EventCardSaved(props) {
     //limits description to desired length
     let text_truncate = function (str, length, ending) {
         if (length == null) {
@@ -40,10 +40,13 @@ function EventCard(props) {
                     <br />
                     {description}
                 </Card.Text>
-                <Button variant="info" onClick={() => props.handleEventfulSave({...props})}>Save Event</Button>
+                {/*<Button variant="danger"*/}
+                {/*        onClick={() => props.handleEventfulDelete(props.id)}>*/}
+                {/*    Delete Food*/}
+                {/*</Button>*/}
             </Card.Body>
         </Card>
     );
 }
 
-export default EventCard;
+export default EventCardSaved;
