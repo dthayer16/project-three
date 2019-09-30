@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { Jumbotron, Container, Row, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import KijakCard from "../components/KijakCard"
 import API from "../Utils/API";
@@ -23,12 +24,14 @@ class About extends Component {
     const context = this.context;
     console.log(airports.findWhere({ city: 'Los Angeles' }).get('iata'))
     API.getFlight(this.state)
+
       .then(res => {
         // console.log(res.data.event);
         this.setState({ kijak: JSON.parse(res.data) })
       })
       .catch(err => console.log(err));
   }
+
   handleChange = date => {
     this.setState({
       startDate: date
@@ -41,6 +44,7 @@ class About extends Component {
     });
     console.log(this.state.endDate)
   };
+
   renderFlightInfo = () => {
     const { kijak } = this.state;
     const flights = [];
@@ -56,6 +60,7 @@ class About extends Component {
       />)
     }
     return flights;
+
   }
   //Attempted to build out a translator function and call it from within submitOn. No success yet
   translateCity = (val) => {
@@ -69,6 +74,7 @@ class About extends Component {
         [name]: value
     });
     console.log(this.state)
+
 }
 // Submit should translate the City name to the airport code and then any redirects you may need
   submitOn = () => {
