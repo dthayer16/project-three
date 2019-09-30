@@ -1,19 +1,15 @@
 require("dotenv").config();
 
-var express = require("express");
+const express = require("express");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
-
-var PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 require("./services/passport.js");
 // Initialize Express
-var app = express();
+const app = express();
 
 //Models
-var $ = require("./models");
+const $ = require("./models");
 
 // Parse request body as JSON
 app.use(express.json());
@@ -29,7 +25,6 @@ db(process.env.MONGODB_URI || "mongodb://localhost/test");
 
 // Routes
 app.use(require("./routes"));
-
 
 // Start the server
 app.listen(PORT, function () {

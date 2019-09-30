@@ -70,8 +70,7 @@ router.get("/flight", function (req, res) {
             cabin: 'e',
             currency: 'USD',
             adults: '1',
-            bags: '0',
-
+            bags: '0'
         },
         headers: {
             "x-rapidapi-host": 'apidojo-kayak-v1.p.rapidapi.com',

@@ -4,7 +4,7 @@ import {Container, Link} from 'react-floating-action-button'
 function FAButton() {
     return (
         <Container>
-            <Link href="/about"
+            <Link href="/flights"
                   tooltip="Let's Find A Flight!"
                   className="btn btn-lg text-white"
                   icon="fas fa-plane"

@@ -4,7 +4,7 @@ import KijakCard from "../components/KijakCard"
 import API from "../Utils/API";
 import UserContext from "./UserContext";
 
-class About extends Component {
+class Flights extends Component {
 
   static contextType = UserContext;
 
@@ -57,6 +57,7 @@ class About extends Component {
     return (
       <div>
         <Container>
+        <h3 className="">Results for Bozeman Airport, MT to Salt Lake City Airport, UT:</h3>
           <Jumbotron>
             <Row>
               {this.renderFlightInfo()}
@@ -68,4 +69,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default Flights;

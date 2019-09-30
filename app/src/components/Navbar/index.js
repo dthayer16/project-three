@@ -52,8 +52,8 @@ class Navvy extends React.Component {
               )}
 
               <Link className="dropdown-item" to="/">Home</Link>
-              <Link className="dropdown-item" to="/discover">Results</Link>
-              <Link className="dropdown-item" to="/about">Form</Link>
+              <Link className="dropdown-item" to="/discover">Events/Food</Link>
+              <Link className="dropdown-item" to="/flights">Flights</Link>
               <Link className="dropdown-item" to="/saved">Saved</Link>
 
               {!this.props.loggedIn && (
