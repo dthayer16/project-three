@@ -131,7 +131,7 @@ router.post("/signup", function (req, res) {
 
 // Save/Delete Functionality
 //================================================================================================================
-router.get("/saved", function(req, res) {
+router.get("/saved", requireAuth, function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     db.User.find({})
     // ..and populate all of the notes associated with it

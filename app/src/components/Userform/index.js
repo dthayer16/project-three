@@ -62,7 +62,7 @@ class userform extends React.Component {
 
 
   render() {
-    // console.log(this.props);
+
     return (
       <Form inline>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
