@@ -7,12 +7,6 @@ import UserContext from "./UserContext";
 class Search extends Component {
   static contextType = UserContext;
 
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
-  componentDidMount() {
-  // const context = this.context;
-
-  }
-
   handleInputChange = event => {
     this.context.search = event.target.value;
     console.log(this.context)
@@ -24,13 +18,14 @@ class Search extends Component {
     this.setState({ search: this.context.search });
     console.log("form submitted")
   };
+  
   render() {
     return (
       <div>
 
         <Container style={{ minHeight: "80%", marginTop: "12rem" }}>
           <h1 className="text-center">Where To?</h1>
-          <br/><br/>
+          <br /><br />
 
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}

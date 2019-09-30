@@ -51,7 +51,7 @@ class userform extends React.Component {
             token: response.data.token
           })
           // update the state to redirect to home
-          this.props.history.push("/home");
+          this.props.history.push("/");
         }
       }).catch(error => {
         console.log('sign up error: ');

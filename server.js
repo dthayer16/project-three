@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const express = require("express");
+const mongoose = require("mongoose");
+const path = require("path");
 
 const PORT = process.env.PORT || 8080;
 
@@ -25,6 +27,10 @@ db(process.env.MONGODB_URI || "mongodb://localhost/test");
 
 // Routes
 app.use(require("./routes"));
+
+app.get("*", function(req, res){
+    res.sendFile(path.resolve(__dirname, "app", "build", "index.html"));
+})
 
 // Start the server
 app.listen(PORT, function () {

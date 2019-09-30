@@ -36,7 +36,7 @@ class LoginForm extends Component {
                 password: this.state.password
             })
             .then(response => {
-                console.log('login response: ')
+                console.log('login response: ');
                 console.log(response)
                 if (response.status === 200) {
                     // update App.js state
@@ -55,7 +55,7 @@ class LoginForm extends Component {
                     this.props.history.push("/");
                 }
             }).catch(error => {
-                console.log('login error: ')
+                console.log('login error: ');
                 console.log(error);
 
             })

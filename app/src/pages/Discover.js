@@ -17,24 +17,19 @@ class Discover extends Component {
         yelp: [],
     };
 
-    // When the component mounts, load the next dog to be displayed
     componentDidMount() {
-        // var city = this.state.search;
+
         const context = this.context;
 
         API.getEvents(context.search)
             .then(res => {
-                // console.log(res.data.event);
-                this.setState({eventful: res.data.event})
-
+                this.setState({ eventful: res.data.event })
             })
             .catch(err => console.log(err));
 
         API.getYelp(context.search)
             .then(res => {
-                // console.log(res.data.businesses);
-                this.setState({yelp: res.data.businesses})
-
+                this.setState({ yelp: res.data.businesses })
             })
             .catch(err => console.log(err));
     }
@@ -59,20 +54,19 @@ class Discover extends Component {
         axios({
             method: "post",
             url: "v1/saved/event",
-            headers: {Authorization: token},
+            headers: { Authorization: token },
             data: {
                 eventId: event.key,
                 title: event.title,
-                url: event.url,
                 description: event.description,
-                rating: event.rating,
-                review_count: event.review_count
+                url: event.url,
+                date: event.date
             }
-        }).then (res => console.log(res))
-            .catch(err =>console.log(err))
+        }).then(res => console.log(res))
+            .catch(err => console.log(err))
     };
 
-    handleYelpSave = yelp=> {
+    handleYelpSave = yelp => {
         console.log("Yelp Submitted");
         const token = JSON.parse(localStorage.getItem("state")).token;
         console.log(token);
@@ -80,7 +74,7 @@ class Discover extends Component {
         axios({
             method: "post",
             url: "v1/saved/yelp",
-            headers: {Authorization: token},
+            headers: { Authorization: token },
             data: {
                 yelpId: yelp.key,
                 name: yelp.name,
@@ -88,10 +82,10 @@ class Discover extends Component {
                 price: yelp.price,
                 rating: yelp.rating,
                 image_url: yelp.image_url,
-                date: yelp.start_date
+                review_count: yelp.review_count,
             }
-        }).then (res => console.log(res))
-            .catch(err =>console.log(err))
+        }).then(res => console.log(res))
+            .catch(err => console.log(err))
 
     };
 
@@ -113,7 +107,7 @@ class Discover extends Component {
                                         description={event.description}
                                         url={event.url}
                                         date={event.start_time}
-                                        handleEventfulSave={ this.handleEventfulSave }
+                                        handleEventfulSave={this.handleEventfulSave}
                                     />
                                 ) : <h1> No Events </h1>}
                             </Col>
@@ -129,7 +123,7 @@ class Discover extends Component {
                                         image_url={data.image_url}
                                         rating={data.rating}
                                         review_count={data.review_count}
-                                        handleYelpSave={ this.handleYelpSave }
+                                        handleYelpSave={this.handleYelpSave}
                                     />
                                 )}
                             </Col>

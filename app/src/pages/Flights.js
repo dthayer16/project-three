@@ -13,14 +13,12 @@ class Flights extends Component {
     kijak: {}
   };
 
-  // When the component mounts, load the next dog to be displayed
   componentDidMount() {
-    // var city = this.state.search;
+
     const context = this.context;
 
     API.getFlight(context.search)
       .then(res => {
-        // console.log(res.data.event);
         this.setState({ kijak: JSON.parse(res.data) })
       })
       .catch(err => console.log(err));
@@ -41,7 +39,7 @@ class Flights extends Component {
       />)
     }
     return flights;
-  }
+  };
   // handleInputChange = event => {
   //   this.context.search = event.target.value;
   // };
@@ -57,7 +55,7 @@ class Flights extends Component {
     return (
       <div>
         <Container>
-        <h3 className="">Results for Bozeman Airport, MT to Salt Lake City Airport, UT:</h3>
+          <h3 className="">Results for Bozeman Airport, MT to Salt Lake City Airport, UT:</h3>
           <Jumbotron>
             <Row>
               {this.renderFlightInfo()}
