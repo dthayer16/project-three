@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Discover from "./pages/Discover";
-import About from "./pages/About";
+import Flights from "./pages/Flights";
 import Search from "./pages/Search";
 import Saved from "./pages/Saved";
 import Wrapper from "./components/Wrapper";
@@ -60,7 +60,7 @@ class App extends Component {
             <Wrapper>
               <Route exact path="/" component={Search} />
               <Route exact path="/search" component={Search} />
-              <Route exact path="/about" component={About} />
+              <Route exact path="/flights" component={Flights} />
               <Route exact path="/discover" component={Discover} />
               <Route exact path="/saved" render={props => {
                 return this.state.token ? <Saved /> : <Redirect to="/login" />

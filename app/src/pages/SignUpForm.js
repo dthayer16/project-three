@@ -7,7 +7,6 @@ function Signup(props) {
     <div
       className="text-center"
       style={{
-        backgroundImage: `url(https://images.wallpaperscraft.com/image/cube_dark_texture_shape_119956_300x168.jpg)`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -19,10 +18,11 @@ function Signup(props) {
         style={{
           backgroundColor: "white",
           padding: "40px",
-          width: "675px"
+          width: "675px",
+          boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
         }}
       >
-        <Row>
+        <Row className="justify-content-center">
           <h1
             style={{
               marginBottom: "30px"
@@ -31,8 +31,9 @@ function Signup(props) {
             Sign up
           </h1>
         </Row>
-        <Row>
+        <Row className="justify-content-center">
           <Userform updateUser={props.updateUser} />
+          <p style={{ marginTop: "20px" }}>Already a User? <a href="/login">Login!</a></p>
         </Row>
       </Container>
     </div>

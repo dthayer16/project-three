@@ -14,7 +14,6 @@ class Register extends Component {
 
 	componentDidMount() {
 		this.setState({ mounted: true });
-
 	}
 
 	handleSubmit = (e) => {

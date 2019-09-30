@@ -86,8 +86,7 @@ class userform extends React.Component {
             onChange={this.handleChange} id="examplePassword"
             placeholder="Password" />
         </FormGroup>
-        <Button onClick={this.handleSubmit} type="submit" >Submit</Button>
-        <p style={{ marginTop: "20px" }}>Already a User? <a href="/login">Login!</a></p>
+        <Button className="mt-2 mb-2 mr-sm-2 mb-sm-0 btn btn-info" onClick={this.handleSubmit} type="submit" >Submit</Button>
       </Form>
     );
   }

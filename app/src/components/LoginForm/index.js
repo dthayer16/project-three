@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import {
-
     Button,
     Form,
     FormGroup,
@@ -17,7 +16,6 @@ class LoginForm extends Component {
             email: '',
             password: '',
             redirectTo: null
-
         }
     }
 
@@ -76,14 +74,14 @@ class LoginForm extends Component {
                     <Label for="examplePassword" className="mr-sm-2">Password</Label>
                     <Input type="password" name="password" value={this.state.password} onChange={this.handleChange} id="examplePassword" placeholder="Password" />
                 </FormGroup>
+                <br />
                 <Button
                     //  className="btn btn-primary col-1 col-mr-auto"
+                    className="mt-2 mb-2 mr-sm-2 mb-sm-0 btn btn-info"
 
                     onClick={this.handleSubmit}
 
                     type="submit">Submit</Button>
-
-                <p style={{ marginTop: "20px" }}>Not a User? <a href="/signup">Sign Up!</a></p>
             </Form>
         );
     }

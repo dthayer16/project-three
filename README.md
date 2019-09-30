@@ -1,6 +1,6 @@
 # Project Three
 Team Members
-Alex Powarzynski, Michael Boslin, David Thayer
+Alex Powarzynski and David Thayer
 
 # Project Description
 

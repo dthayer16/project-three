@@ -4,7 +4,7 @@ import KijakCard from "../components/KijakCard"
 import API from "../Utils/API";
 import UserContext from "./UserContext";
 
-class About extends Component {
+class Flights extends Component {
 
   static contextType = UserContext;
 
@@ -13,14 +13,12 @@ class About extends Component {
     kijak: {}
   };
 
-  // When the component mounts, load the next dog to be displayed
   componentDidMount() {
-    // var city = this.state.search;
+
     const context = this.context;
 
     API.getFlight(context.search)
       .then(res => {
-        // console.log(res.data.event);
         this.setState({ kijak: JSON.parse(res.data) })
       })
       .catch(err => console.log(err));
@@ -57,6 +55,7 @@ class About extends Component {
     return (
       <div>
         <Container>
+          <h3 className="">Results for Bozeman Airport, MT to Salt Lake City Airport, UT:</h3>
           <Jumbotron>
             <Row>
               {this.renderFlightInfo()}
@@ -68,4 +67,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default Flights;
