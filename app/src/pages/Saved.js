@@ -18,7 +18,6 @@ class Saved extends Component {
         yelp: [],
     };
 
-    // When the component mounts, load the next dog to be displayed
     componentDidMount() {
         this.loadEventData();
         this.loadYelpData();
